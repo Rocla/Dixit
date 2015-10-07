@@ -7,7 +7,7 @@
 
 It is a multiplayer Community Simulator on space.
 
-## [More on the Wiki](https://github.com/hearc-bananas-web-dev/Phanes/wiki)
+## [More on the Wiki](https://github.com/hearc-bananas-web-dev/Dixit/wiki)
 
 ## License
 
