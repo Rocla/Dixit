@@ -1,6 +1,6 @@
 # School Project of Web Development at HE-Arc Neuchâtel
 
-Dixit [HTML5](http://www.w3.org/TR/html5/), [PHP](http://www.php.net), and [Laravel](http://laravel.com) adaptation of the Dixit card game.
+[HTML5](http://www.w3.org/TR/html5/), [PHP](http://www.php.net), and [Laravel](http://laravel.com) adaptation of the Dixit card game.
 
 
 ## Brief Description
