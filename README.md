@@ -14,7 +14,7 @@
 ## [More on the Wiki](https://github.com/Rocla/Dixit/wiki)
 
 ## License
-Copyright to the logic: [Dixit-Online](https://github.com/PCreations/Dixit-Online)
-Copyright for the game and the artwork: [Libellud](http://en.libellud.com/games/dixit)
+- Copyright to the logic: [Dixit-Online](https://github.com/PCreations/Dixit-Online)
+- Copyright for the game and the artwork: [Libellud](http://en.libellud.com/games/dixit)
 
 
