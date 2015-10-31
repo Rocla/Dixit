@@ -55,9 +55,9 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'dixitdb'),
-            'username'  => env('DB_USERNAME', 'dixituser'),
-            'password'  => env('DB_PASSWORD', 'dixitpw'),
+-           'database'  => env('DB_DATABASE', 'dixitdb'),
++           'username'  => env('DB_USERNAME', 'dixituser'),
++           'password'  => env('DB_PASSWORD', 'dixitpw'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
