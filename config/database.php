@@ -52,14 +52,14 @@ return [
             'prefix'   => '',
         ],
 
-        'mysql' => [
+        'mysql' => [ 
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'dixitdb'),
-            'username'  => env('DB_USERNAME', 'dixituser'),
-            'password'  => env('DB_PASSWORD', 'dixitpw'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'host' => env('DB_HOST', env('MYSQL_HOST', 'forge')),
+            'database' => env('DB_DATABASE', env('MYSQL_DATABASE', 'forge')),
+            'username' => env('DB_USERNAME', env('MYSQL_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', env('MYSQL_PASSWORD', '')),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
         ],
