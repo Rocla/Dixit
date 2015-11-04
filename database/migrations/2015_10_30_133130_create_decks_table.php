@@ -13,14 +13,11 @@ class CreateDecksTable extends Migration
     public function up()
     {
         Schema::create('decks', function (Blueprint $table) {
-            $table->increments('deck_id');
-            $table->integer('user_id')->unsigned();
-            $table->string('deck_name');
-            $table->string('deck_status');
+            $table->increments('pk_id');
+            $table->string('name', 50);
             $table->timestamps();
-            $table->foreign('user_id')->references('user_id')->on('users')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
+
+            $table->primary(array('pk_id'));
         });
     }
 

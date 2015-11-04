@@ -56,7 +56,7 @@ return [
             'driver'    => 'mysql',
             'host' => env('DB_HOST', env('MYSQL_HOST', 'forge')),
             'database' => env('DB_DATABASE', env('MYSQL_DATABASE', 'forge')),
-            'username' => env('DB_USERNAME', env('MYSQL_USERNAME', 'forge'),
+            'username' => env('DB_USERNAME', env('MYSQL_USERNAME', 'forge')),
             'password' => env('DB_PASSWORD', env('MYSQL_PASSWORD', '')),
             'charset'   => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
