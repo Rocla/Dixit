@@ -17,9 +17,7 @@ class CreateCardsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->timestamps();
-            $table->integer('fk_decks');
-
-            $table->primary(array('pk_id'));
+            $table->integer('fk_decks')->unsigned();          
 
             $table->foreign('fk_decks')
                 ->references('pk_id')

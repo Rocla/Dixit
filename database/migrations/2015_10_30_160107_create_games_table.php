@@ -18,8 +18,7 @@ class CreateGamesTable extends Migration
             $table->boolean('started');
             $table->integer('turn_timout')->unsigned();
             $table->timestamps();
-
-            $table->primary(array('pk_id'));
+            
         });
     }
 

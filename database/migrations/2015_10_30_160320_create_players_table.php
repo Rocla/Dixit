@@ -18,7 +18,7 @@ class CreatePlayersTable extends Migration
             $table->bigInteger('token')->unique();
             $table->timestamps();
 
-            $table->primary(array('pk_id'));
+//            $table->primary(array('pk_id'));
         });
     }
 
