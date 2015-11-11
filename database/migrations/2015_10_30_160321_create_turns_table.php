@@ -20,7 +20,7 @@ class CreateTurnsTable extends Migration
             $table->integer('fk_games')->unsigned();
             $table->integer('fk_story_teller')->unsigned();
 
-            $table->primary(array('pk_id'));
+            //$table->primary(array('pk_id'));
 
             $table->foreign('fk_games')
                 ->references('pk_id')

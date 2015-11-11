@@ -17,7 +17,8 @@ class CreateSelectionIsVodetedPlayerTable extends Migration
             $table->integer('fk_selections_turns')->unsigned();
             $table->integer('fk_players')->unsigned();
 
-            $table->primary(array('fk_selections_players', 'fk_selections_turns', 'fk_players'));
+            $table->primary(array('fk_selections_players', 'fk_selections_turns', 'fk_players'), 'selection_voted_primary');
+            
 
             $table->foreign('fk_selections_players')
                 ->references('fk_players')
@@ -25,8 +26,7 @@ class CreateSelectionIsVodetedPlayerTable extends Migration
                 ->onDelete('cascade');
             $table->foreign('fk_selections_turns')
                 ->references('fk_turns')
-                ->on('selections')
-                ->on('cards')
+                ->on('selections')             
                 ->onDelete('cascade');
             $table->foreign('fk_players')
                 ->references('pk_id')
