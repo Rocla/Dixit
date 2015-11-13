@@ -15,10 +15,13 @@ class CreatePlayersTable extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->increments('pk_id');
             $table->string('pseudo');
-            $table->bigInteger('token')->unique();
             $table->timestamps();
+            $table->integer('fk_games')->unsigned();
 
-//            $table->primary(array('pk_id'));
+            $table->foreign('fk_games')
+                ->references('pk_id')
+                ->on('games')
+                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +32,6 @@ class CreatePlayersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('player');
+        Schema::drop('players');
     }
 }

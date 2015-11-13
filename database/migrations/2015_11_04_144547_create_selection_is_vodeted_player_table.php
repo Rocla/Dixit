@@ -17,8 +17,7 @@ class CreateSelectionIsVodetedPlayerTable extends Migration
             $table->integer('fk_selections_turns')->unsigned();
             $table->integer('fk_players')->unsigned();
 
-            $table->primary(array('fk_selections_players', 'fk_selections_turns', 'fk_players'), 'selection_voted_primary');
-            
+            $table->primary(array('fk_selections_players', 'fk_selections_turns', 'fk_players'), 'pk_selection_voted');
 
             $table->foreign('fk_selections_players')
                 ->references('fk_players')

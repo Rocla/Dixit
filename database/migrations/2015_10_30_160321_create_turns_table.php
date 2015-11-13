@@ -14,13 +14,10 @@ class CreateTurnsTable extends Migration
     {
         Schema::create('turns', function (Blueprint $table) {
             $table->increments('pk_id');
-            $table->dateTime('start_time');
             $table->string('story',100);
             $table->timestamps();
             $table->integer('fk_games')->unsigned();
             $table->integer('fk_story_teller')->unsigned();
-
-            //$table->primary(array('pk_id'));
 
             $table->foreign('fk_games')
                 ->references('pk_id')

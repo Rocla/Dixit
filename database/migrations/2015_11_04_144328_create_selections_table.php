@@ -17,7 +17,7 @@ class CreateSelectionsTable extends Migration
             $table->integer('fk_turns')->unsigned();
             $table->integer('fk_cards')->unsigned();
 
-            $table->primary(array('fk_players', 'fk_turns', 'fk_cards'));
+            $table->primary(array('fk_players', 'fk_turns'), 'pk_selection');
 
             $table->foreign('fk_players')
                 ->references('pk_id')
