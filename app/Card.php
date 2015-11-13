@@ -8,7 +8,7 @@ class Card extends Model
 {
 	public function deck()
 	{
-		return $this->belongsTo('App\Deck');
+		return $this->belongsTo('App\Deck', 'decks_id');
 	}
 
 	public function player()
@@ -18,7 +18,7 @@ class Card extends Model
 
 	public function selection()
 	{
-		return $this->hasMany('App\Selection');
+		return $this->hasMany('App\Selection', 'card_id');
 	}
 
 	protected $table = 'cards';
