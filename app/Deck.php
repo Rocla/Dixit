@@ -8,7 +8,7 @@ class Deck extends Model
 {
 	public function cards()
 	{
-		return $this->hasMany('App\Card');
+		return $this->hasMany('App\Card', 'fk_decks', 'pk_id');
 	}
 
 	public function games()
