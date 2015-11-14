@@ -30,15 +30,30 @@
                 display: inline-block;
             }
 
-            .title {
+/*            .title {
                 font-size: 96px;
-            }
+            }*/
         </style>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript">
+            
+            $(document).ready(function(){
+                i++;
+                $("#next").click(function(){
+                    $("#image).attr('src', $
+                });
+            });
+        
+        </script>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">
+                    <image src="{!!$cards[0]->name!!}" id="image"/>
+                    <button type="button" id="next">NEXT</button>
+                </div>
             </div>
         </div>
     </body>
