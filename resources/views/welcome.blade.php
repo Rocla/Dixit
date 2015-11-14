@@ -49,11 +49,13 @@
     </head>
     <body>
         <div class="container">
+
             <div class="content">
                 <div class="title">
                     <image src="{!!$cards[0]->name!!}" id="image"/>
                     <button type="button" id="next">NEXT</button>
                 </div>
+
             </div>
         </div>
     </body>

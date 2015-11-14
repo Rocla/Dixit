@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
+        $this->call(CardsOfficialDeckSeeder::class);
+        $this->command->info('Card table seeded with official deck');
 
         Model::reguard();
     }
