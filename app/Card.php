@@ -24,7 +24,4 @@ class Card extends Model
 	protected $table = 'cards';
 	protected $primarykey = 'pk_id';
 	protected $fillable = array('name', 'image');
-
-	private $name;
-	private $image;
 }

@@ -11,15 +11,13 @@ class Deck extends Model
 		return $this->hasMany('App\Card');
 	}
 
-	public function game()
+	public function games()
 	{
-		return $this->belongsToMany('App\Game');
+		return $this->belongsToMany('App\Game', 'games_based_on_decks', 'fk_decks', 'fk_games');
 	}
 
 	protected $table = 'decks';
 	protected $primarykey = 'pk_id';
 	protected $fillable = array('name');
-
-	private $name;
 }
  

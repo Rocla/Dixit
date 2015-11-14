@@ -6,26 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-	public function player()
+	public function players()
 	{
-		return $this->hasMany('App\Player');
+		return $this->hasMany('App\Player', 'fk_games', 'pk_id');
 	}
 
-	public function turn()
+	public function turns()
 	{
-		return $this->hasMany('App\Turn');
+		return $this->hasMany('App\Turn', 'fk_games', 'pk_id');
 	}
 
-	public function deck()
+	public function decks()
 	{
-		return $this->belongsToMany('App\Deck');
+		return $this->belongsToMany('App\Deck', 'games_based_on_decks', 'fk_games', 'fk_decks');
 	}
 
 	protected $table = 'games';
 	protected $primarykey = 'pk_id';
 	protected $fillable = array('language', 'started', 'turn_timout');
-
-	private $language;
-	private $started;
-	private $turn_timout;
 }
