@@ -36,12 +36,10 @@
         </style>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script type="text/javascript">
-            
-            $(document).ready(function(){
-                i++;
-                $("#next").click(function(){
-                    $("#image).attr('src', $
+        <script type="text/javascript">            
+            $(document).ready(function(){        
+                $("#next").click(function(){                   
+                    $("#image").attr('src', 'images/cards/official/{!!$cards[1]->name!!}');
                 });
             });
         
@@ -52,7 +50,7 @@
 
             <div class="content">
                 <div class="title">
-                    <image src="{!!$cards[0]->name!!}" id="image"/>
+                    <image src="images/cards/official/{!!$cards[0]->name!!}" id="image"/>
                     <button type="button" id="next">NEXT</button>
                 </div>
 
