@@ -11,9 +11,9 @@ class Player extends Model
 		return $this->belongsTo('App\Game');
 	}
 
-	public function card()
+	public function cards()
 	{
-		return $this->belongsToMany('App\Card');
+		return $this->belongsToMany('App\Card', 'hands', 'fk_cards', 'fk_players' );
 	}
 
 	public function turn()
@@ -26,9 +26,9 @@ class Player extends Model
 		return $this->belongsToMany('App\Selection');
 	}
 
-	public function selection()
+	public function selections()
 	{
-		return $this->hasMany('App\Selection');
+		return $this->belongsToMany('App\Selection', 'selection_is_voted_players', 'fk_players', 'pk_selection_voted');
 	}
 
 	protected $table = 'players';
