@@ -1,6 +1,7 @@
 <?php 
 
 namespace Dixit\Http\Controllers;
+
 use Dixit\Card;
 
 /**
@@ -16,13 +17,13 @@ class HomeController extends Controller
     public function __construct(Card $_cards)
     {     
         $this->cards=$_cards;
+        $this->middleware('auth');
     }   
     
     public function getIndex()
     {       
-        return view('welcome')
-               ->with('cards', $this->cards->all());
-        \DebugBar::error("error");
+        return view('welcome')->with('cards', $this->cards->all());
+        DebugBar::error("error");
     }
     
 }

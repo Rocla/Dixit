@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
 
-            @if (count($errors) > 0)
+                @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     Don't worry, be happy <strong>It's not 404!</strong> but something went wrong.<br/><br/>
                     <table>
@@ -17,7 +17,7 @@
                         </tr>
                     </table>
                 </div>
-            @endif
+                @endif
                 <div class="panel-heading">Welcome page for Guests</div>
 
                 <div class="panel-body">

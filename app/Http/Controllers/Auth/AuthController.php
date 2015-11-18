@@ -6,7 +6,11 @@ use Dixit\User;
 use Validator;
 use Dixit\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Dixit\Http\Requests\PasswordRecoveryRequest;
+use Hash;
 
 class AuthController extends Controller
 {
@@ -42,9 +46,11 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'username'  =>  'required|max:255',
+            'email'     =>  'required|email|max:255|unique:users',
+            'password'  =>  'required|confirmed|min:6',
+            'public_key' =>  'required|max:255',
+            'private_key'    =>  'required|confirmed|max:255',
         ]);
     }
 
@@ -57,9 +63,37 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username'  =>  $data['username'],
+            'email'     =>  $data['email'],
+            'password'  =>  bcrypt($data['password']),
+            'public_key'  =>  bcrypt($data['public_key']),
+            'private_key'    =>  bcrypt($data['private_key']),
         ]);
+    }
+
+    public function getRecoverPassword()
+    {
+        return view('auth.recover');
+    }
+
+    public function postRecoverPassword(PasswordRecoveryRequest $request)
+    {
+        $publicKey = $request->get('public_key');
+        $privateKey = $request->get('private_key');
+
+        $user = User::where('email', $request->get('email'))->first();
+
+        if(Hash::check($publicKey,$user->public_key) && Hash::check($privateKey,$user->private_key))
+        {
+            $user->password = bcrypt($request->get('password'));
+
+            $user->save();
+
+            return redirect('auth/login')
+            ->with(['success' => 'Congrats, you modified your password with success!']);
+        }
+
+        return redirect('auth/recover-password')->withInput($request->only('email', 'public_key'))
+        ->withErrors('Sorry, the public key and/or the private key don\'t match');
     }
 }

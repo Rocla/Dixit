@@ -11,4 +11,10 @@
 |
 */
 
-Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
+Route::controllers
+([
+	'home'	=>	'HomeController',
+	'auth'	=>	'Auth\AuthController',
+	'user'	=>	'UserController',
+	'/'		=>	'WelcomeController',
+]);
