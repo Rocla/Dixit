@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Dixit\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

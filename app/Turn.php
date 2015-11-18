@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Dixit;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,17 +8,17 @@ class Turn extends Model
 {
 	public function game()
 	{
-		return $this->belongsTo('App\Game', 'fk_games', 'pk_id');
+		return $this->belongsTo('Dixit\Game', 'fk_games', 'pk_id');
 	}
 
 	public function storyteller()
 	{
-		return $this->belongsTo('App\Player', 'fk_story_teller', 'pk_id');
+		return $this->belongsTo('Dixit\Player', 'fk_story_teller', 'pk_id');
 	}
 
 	public function selections()
 	{
-		return $this->hasMany('App\Selection', 'fk_turns', 'pk_id');
+		return $this->hasMany('Dixit\Selection', 'fk_turns', 'pk_id');
 	}
 
 	protected $table = 'turns';

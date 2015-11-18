@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Card;
-use App\Deck;
+use Dixit\Card;
+use Dixit\Deck;
 
 class CardsOfficialDeckSeeder extends Seeder
 {

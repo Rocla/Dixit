@@ -1,60 +1,49 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends('base')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
 
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-/*            .title {
-                font-size: 96px;
-            }*/
-        </style>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script type="text/javascript">            
-            $(document).ready(function(){        
-                $("#next").click(function(){                   
-                    $("#image").attr('src', 'images/cards/official/{!!$cards[1]->name!!}');
-                });
-            });
-        
-        </script>
-    </head>
-    <body>
-        <div class="container">
-
-            <div class="content">
-                <div class="title">
-                    <image src="images/cards/official/{!!$cards[0]->name!!}" id="image"/>
-                    <button type="button" id="next">NEXT</button>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    Don't worry, be happy <strong>It's not 404!</strong> but something went wrong.<br/><br/>
+                    <table>
+                        <tr>
+                        @foreach ($errors->all() as $error)
+                            <th>{{ $error }}</th>
+                        @endforeach
+                        </tr>
+                    </table>
                 </div>
+            @endif
+                <div class="panel-heading">Welcome page for Guests</div>
 
+                <div class="panel-body">
+                    <center>
+                        <image src="images/cards/official/{!!$cards[0]->name!!}" id="image"/><br/><br/>
+                        <button type="button" id="next">NEXT</button>
+                        <p id="test">test text is here</p>
+                    </center>
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+
+<script type="text/javascript">            
+    $(document).ready(function(){
+        var i = 0;
+        $("#test").text("cards[" + i + "]");
+        $("#next").click(function(){
+            i++;
+            $("#image").attr('src', "images/cards/official/{!!$cards[1]->name!!}");
+            $("#test").text("cards[" + i + "]");
+            // Romain: J'arrive pas à creer une requete incrementalle avec {!!$cards[n+1]
+        });
+    });
+</script>
+@endsection
+
+

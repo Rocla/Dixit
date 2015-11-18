@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Dixit;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

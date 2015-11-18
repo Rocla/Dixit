@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Dixit;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,12 +8,12 @@ class Deck extends Model
 {
 	public function cards()
 	{
-		return $this->hasMany('App\Card', 'fk_decks', 'pk_id');
+		return $this->hasMany('Dixit\Card', 'fk_decks', 'pk_id');
 	}
 
 	public function games()
 	{
-		return $this->belongsToMany('App\Game', 'games_based_on_decks', 'fk_decks', 'fk_games');
+		return $this->belongsToMany('Dixit\Game', 'games_based_on_decks', 'fk_decks', 'fk_games');
 	}
 
 	protected $table = 'decks';

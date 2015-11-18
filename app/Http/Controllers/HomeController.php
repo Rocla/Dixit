@@ -1,7 +1,7 @@
 <?php 
 
-namespace App\Http\Controllers;
-use App\Card;
+namespace Dixit\Http\Controllers;
+use Dixit\Card;
 
 /**
  * Description of HomeController

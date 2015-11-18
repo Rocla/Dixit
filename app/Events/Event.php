@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Dixit\Events;
 
 abstract class Event
 {
