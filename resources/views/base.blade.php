@@ -41,7 +41,9 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">
-                                <span class="caret">{{ Auth::user()->name }}</span>
+                                Hello, {{ Auth::user()->username }}
+                                <span class="caret"></span>
+
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('#') }}">My Profile</a></li>
