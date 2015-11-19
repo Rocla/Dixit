@@ -3,8 +3,6 @@
 namespace Dixit\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Dixit\InterfaceDAO\PlayerInterface;
-use Dixit\ImplementationEloquentDAO\PlayerRepository;
 
 class BindingServiceProvider extends ServiceProvider
 {
