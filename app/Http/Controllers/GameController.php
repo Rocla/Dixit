@@ -24,7 +24,7 @@ class GameController extends Controller
     public function getPlayers($gameId)
     {
         return $this->player->getPlayerInGame($gameId);
-    }
+    } 
     
     /**
      * Return the players status in an array.
