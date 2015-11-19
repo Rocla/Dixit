@@ -3,10 +3,15 @@
 namespace Dixit\Http\Controllers;
 
 use Dixit\Http\Controllers\Controller;
-
-class Game extends Controller
+use Dixit\InterfaceDAO\PlayerInterface;
+class GameController extends Controller
 {
+    private $player;
     
+    function __construct(PlayerInterface $player) {
+        $this->player = $player;
+    }
+
     /*==================================================================*/
     //      RELATIVE TO ALL PLAYER / TO A GAME
     /*==================================================================*/
@@ -18,7 +23,7 @@ class Game extends Controller
      */
     public function getPlayers($gameId)
     {
-        
+        return $this->player->getPlayerInGame($gameId);
     }
     
     /**

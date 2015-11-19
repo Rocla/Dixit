@@ -11,10 +11,12 @@
 |
 */
 
+Route::get('game/{gameId}', 'GameController@getPlayers');
+            
 Route::controllers
 ([
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
 	'user'	=>	'UserController',
-	'/'		=>	'WelcomeController',
+	'/'	=>	'WelcomeController',
 ]);

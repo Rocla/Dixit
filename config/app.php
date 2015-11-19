@@ -145,6 +145,7 @@ return [
         Dixit\Providers\EventServiceProvider::class,
         Dixit\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Dixit\Providers\BindingServiceProvider::class,
 
     ],
 
