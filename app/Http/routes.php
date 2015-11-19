@@ -13,6 +13,8 @@
 
 
 
+Route::get('game/{gameId}', 'GameController@getPlayers');
+
 Route::controllers
 ([
 	'home'	=>	'HomeController',
@@ -22,3 +24,4 @@ Route::controllers
 	'/'     =>      'WelcomeController',
         
  ]);
+

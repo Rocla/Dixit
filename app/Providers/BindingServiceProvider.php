@@ -3,8 +3,10 @@
 namespace Dixit\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Dixit\InterfaceDAO\PlayerInterface;
+use Dixit\ImplementationEloquentDAO\PlayerRepository;
 
-class AppServiceProvider extends ServiceProvider
+class BindingServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $app = $this->app;
+        $app->bind('Dixit\InterfaceDAO\PlayerInterface', 
+                'Dixit\ImplementationEloquentDAO\PlayerRepository');
     }
 }
