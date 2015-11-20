@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsersTable extends Migration
+class UpdateUsersTableQuestionAnswer extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users',function(Blueprint $table){ 
-            $table->dropColumn('name');
-            $table->string('username', 60)->after('id');
-            $table->string('public_key')->after('password');
-            $table->string('private_key')->after('public_key');
+            $table->dropColumn('public_key');
+            $table->dropColumn('private_key');
+            $table->string('question')->after('password');
+            $table->string('answer')->after('question');
         });
     }
 
@@ -27,6 +27,6 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("users");
+        //
     }
 }

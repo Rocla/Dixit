@@ -50,23 +50,23 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">A Public key to recover your password</label>
+							<label class="col-md-4 control-label">A question to recover your password</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="public_key">
+								<input type="text" class="form-control" name="question">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">A Private key to recover your password</label>
+							<label class="col-md-4 control-label">An answer to recover your password</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="private_key">
+								<input type="password" class="form-control" name="answer">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm your private key</label>
+							<label class="col-md-4 control-label">Confirm your answer</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="private_key_confirmation">
+								<input type="password" class="form-control" name="answer_confirmation">
 							</div>
 						</div>
 
@@ -83,7 +83,7 @@
 
 						<div>
 							<center><label>This register form is powered by <a href="http://www.hoax-slayer.com/images/privacy.jpg">iDontCareWhoYouAre.org</a></label></center>
-							<center><label>Only your email and username are in clear in our database.</label></center>
+							<center><label>Your password and answer are encrypted in our database.</label></center>
 						</div>
 					
 				</div>

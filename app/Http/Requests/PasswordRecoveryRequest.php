@@ -17,8 +17,7 @@ class PasswordRecoveryRequest extends Request {
 		[
 			'email' => 'email|required|exists:users,email',
 			'password' => 'required|min:6|confirmed',
-			'public_key' => 'required',
-			'private_key' => 'required'
+			'answer' => 'required'
 		];
 	}
 

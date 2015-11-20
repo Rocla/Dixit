@@ -24,21 +24,25 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Your E-Mail Address</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<button type='button' id="validateEmail" class="btn btn-secondary" disabled>
+									Verify
+								</button>
+							</div>
+							
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Your question</label>
+							<div class="col-md-6">
+								<input id="question" disabled type="text" class="form-control" name="question">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Your public key</label>
+							<label class="col-md-4 control-label">Your answer</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="public_key">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Your private key</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="private_key">
+								<input type="password" class="form-control" name="answer">
 							</div>
 						</div>
 
@@ -69,4 +73,42 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">            
+    $(document).ready(function(){
+        var questionID = document.getElementById("question");
+		questionID.value = "Enter a correct email to see the question";
+
+		var emailID = document.getElementById("email");
+
+		$('#email').on('input', function() { 
+			if(isEmail($(this).val())){
+				questionID.value = "You entered an email, click validate to retrive the question"
+				document.getElementById("validateEmail").removeAttribute('disabled')
+			}
+		});
+
+		$("#validateEmail").click(function(){
+            document.getElementById("validateEmail").setAttribute('disabled')
+            var id = 2;
+            $.ajax({
+				url: 'testEmail',
+				type: "post",
+				data: {
+					'email':$(emailID).val(),
+					'_token': $('input[name=_token]').val()
+				},
+			success: function(data){
+				questionID.value = data;
+				}
+			});
+        });
+
+    });
+    function isEmail(email){
+  		var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  		return regex.test(email);
+	}
+</script>
+
 @endsection

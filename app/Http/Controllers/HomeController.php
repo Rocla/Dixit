@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function getIndex()
     {       
         return view('welcome')->with('cards', $this->cards->all());
-        DebugBar::error("error");
+        //DebugBar::error("error");
     }
     
 }

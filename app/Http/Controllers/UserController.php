@@ -32,10 +32,10 @@ class UserController extends Controller
 			$user->password = bcrypt($request->get('password'));
 		}
 
-		if($request->has('public_key') || $request->has('private_key'))
+		if($request->has('question') || $request->has('answer'))
 		{
-			$user->public_key = bcrypt($request->get('public_key'));
-			$user->private_key = bcrypt($request->get('private_key'));
+			$user->question = bcrypt($request->get('question'));
+			$user->answer = bcrypt($request->get('answer'));
 		}
 
 		$user->save();

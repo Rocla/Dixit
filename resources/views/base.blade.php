@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="_token" content="{!! csrf_token() !!}"/>
 
     <title>Dixit Online</title>
 
@@ -59,5 +59,10 @@
     @yield('content')
 
 </body>
+<script type="text/javascript">
+$.ajaxSetup({
+   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+});
+</script>
 </html>
 

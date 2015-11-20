@@ -11,6 +11,16 @@
 |
 */
 
+//Route::get('test','WelcomeController@getName');
+// Route::get('home','HomeController@getIndex');
+//Route::get('auth','Auth\AuthController@getIndex');
+//Route::get('user','UserController@getIndex');
+// Route::get('/','WelcomeController@getIndex');
+
+//Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
+
+Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
+
 Route::controllers
 ([
 	'home'	=>	'HomeController',
