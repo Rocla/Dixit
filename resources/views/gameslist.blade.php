@@ -13,9 +13,9 @@
                                     <input type="text" name="name" value="test">
                                     Choose the language of the game: 
                                     <select name="lang">
-                                        <option value="Fr">Franch</option>
+                                        <option value="Fr">French</option>
                                         <option value="En">English</option>
-                                        <option value="Dr">Deuch</option>
+                                        <option value="Dr">German</option>
                                     </select>
                                     <input type="submit" value="Send">
                                 </form>    
