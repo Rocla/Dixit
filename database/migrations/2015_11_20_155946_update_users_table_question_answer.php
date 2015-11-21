@@ -13,13 +13,8 @@ class UpdateUsersTableQuestionAnswer extends Migration
     public function up()
     {
         Schema::table('users',function(Blueprint $table){ 
-            //besoin d'ajouter doctrine/dbal en dependance a composer.json
-            //$table->renameColumn('public_key', 'question');
-            //$table->renameColumn('private_key', 'answer');
-            $table->dropColumn('public_key');
-            $table->dropColumn('private_key');
-            $table->string('question')->after('password');
-            $table->string('answer')->after('question');
+            $table->renameColumn('public_key', 'question');
+            $table->renameColumn('private_key', 'answer');
         });
     }
 
