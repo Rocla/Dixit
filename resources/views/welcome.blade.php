@@ -22,9 +22,10 @@
 
                 <div class="panel-body">
                     <center>
-                        <image src="images/cards/official/{!!$cards[0]->name!!}" id="image"/><br/><br/>
-                        <button type="button" id="next">NEXT</button>
-                        <p id="test">test text is here</p>
+                        <image src="images/cards/official/{!!$cards[0]->name!!}" id="cardImage"/><br/><br/>
+                        <button type="button" id="previous">Previous</button>
+                        <button type="button" id="next">Next</button>
+                        <p id="cardName"></p>
                     </center>
                 </div>
             </div>
@@ -35,12 +36,39 @@
 <script type="text/javascript">            
     $(document).ready(function(){
         var i = 0;
-        $("#test").text("cards[" + i + "]");
+
+        $("#cardName").text("cards[" + i + "]");
+
         $("#next").click(function(){
             i++;
-            $("#image").attr('src', "images/cards/official/{!!$cards[1]->name!!}");
-            $("#test").text("cards[" + i + "]");
-            // Romain: J'arrive pas à creer une requete incrementalle avec {!!$cards[n+1]
+            $.ajax({
+                url: 'cards/imageByID',
+                type: "post",
+                data: {
+                    'id':i,
+                    '_token': $('input[name=_token]').val()
+                },
+            success: function(data){
+                $("#cardName").text(data);
+                $("#cardImage").attr('src', "images/cards/official/"+data);
+                }
+            });
+        });
+
+        $("#previous").click(function(){
+            i--;
+            $.ajax({
+                url: 'cards/imageByID',
+                type: "post",
+                data: {
+                    'id':i,
+                    '_token': $('input[name=_token]').val()
+                },
+            success: function(data){
+                $("#cardName").text(data);
+                $("#cardImage").attr('src', "images/cards/official/"+data);
+                }
+            });
         });
     });
 </script>

@@ -8,6 +8,7 @@
 
     <link href="{{asset('/libs/bootstrap-3.3.5/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <!--<link href="{{asset('/libs/fonts/lato.css')}}" rel="stylesheet" type="text/css">-->
 
     <script src="{{asset('/libs/jquery-2.1.4.min.js')}}"></script>
     <script src="{{asset('/libs/bootstrap-3.3.5/js/bootstrap.min.js')}}"></script>

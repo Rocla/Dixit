@@ -23,9 +23,35 @@ class WelcomeController extends Controller {
 
 	public function getIndex()
 	{
+		//Debugbar::error("error");
 		return view('welcome')->with('cards', $this->cards->all());
-
-        Debugbar::error("error");
 	}
 
+	public function postImageByID(Request $request)
+	{
+		$validator = $this->validate($request, [
+        	'id' =>  'integer',
+    	]);
+
+		$id = $request->input('id');
+
+		$allCards = $this->cards->all();
+
+		$countCards = $allCards->count();
+
+		$id = $id % $countCards;
+
+		if ($id < 0)
+		{
+			$id += $countCards;
+		}
+
+		if ($id >= $countCards){
+			return($allCards[0]->name);
+		}
+		else
+		{
+			return($allCards[$id]->name);
+		}
+	}
 }

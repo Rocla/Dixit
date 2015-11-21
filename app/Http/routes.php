@@ -19,10 +19,8 @@
 
 //Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
 
+Route::post('cards/imageByID', 'WelcomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
-
-
-
 Route::get('game/{gameId}', 'GameController@getPlayers');
 
 Route::controllers
@@ -30,8 +28,8 @@ Route::controllers
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
 	'user'	=>	'UserController',
-        'games' =>      'GamesListController',
-	'/'     =>      'WelcomeController',
+	'games' =>	'GamesListController',
+	'/'     => 	'WelcomeController',
         
  ]);
 

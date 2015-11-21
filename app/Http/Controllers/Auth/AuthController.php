@@ -83,9 +83,9 @@ class AuthController extends Controller
     {
         if(Request::ajax()){
 
-            $rules = array(
+            $rules = [
                 'email' =>  'required|email|max:255',
-            );
+            ];
 
             $data = Input::all();
 
@@ -107,19 +107,18 @@ class AuthController extends Controller
                     return("Sorry, this email doesn't exist.");
                 }                
             }
-            die;
+            
         }
 
     }
 
     public function postRecoverPassword(PasswordRecoveryRequest $request)
     {
-        $publicKey = $request->get('question');
-        $privateKey = $request->get('answer');
+        $answer = $request->get('answer');
 
         $user = User::where('email', $request->get('email'))->first();
 
-        if(Hash::check($publicKey,$user->question) && Hash::check($privateKey,$user->answer))
+        if(Hash::check($answer,$user->answer))
         {
             $user->password = bcrypt($request->get('password'));
 

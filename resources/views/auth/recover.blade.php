@@ -90,7 +90,6 @@
 
 		$("#validateEmail").click(function(){
             document.getElementById("validateEmail").setAttribute('disabled')
-            var id = 2;
             $.ajax({
 				url: 'testEmail',
 				type: "post",
