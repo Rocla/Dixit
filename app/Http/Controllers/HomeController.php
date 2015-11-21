@@ -14,16 +14,16 @@ class HomeController extends Controller
 {
     protected $cards;
     
-    public function __construct(Card $_cards)
+    public function __construct(Card $cards)
     {     
-        $this->cards=$_cards;
+        $this->cards=$cards;
         $this->middleware('auth');
     }   
     
     public function getIndex()
     {       
         return view('welcome')->with('cards', $this->cards->all());
-        //DebugBar::error("error");
+        
     }
     
 }

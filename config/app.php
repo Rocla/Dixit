@@ -144,6 +144,9 @@ return [
         Dixit\Providers\AuthServiceProvider::class,
         Dixit\Providers\EventServiceProvider::class,
         Dixit\Providers\RouteServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Dixit\Providers\BindingServiceProvider::class,
+        
 
     ],
 
@@ -193,6 +196,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'DebugBar'  => Barryvdh\Debugbar\Facade::class,
 
     ],
 

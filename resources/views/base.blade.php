@@ -28,7 +28,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('#') }}">Game Tables</a></li>
+                    <li><a href="{{ url('games') }}">Game Tables</a></li>
                     @if (Auth::check())
                         <li><a href="{{ url('#') }}">Current Game</a></li>
                     @endif

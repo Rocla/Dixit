@@ -9,6 +9,8 @@ use Dixit\Http\Controllers\Controller;
 
 use Dixit\Card;
 
+use DebugBar;
+
 class WelcomeController extends Controller {
 
 	protected $cards;
@@ -23,16 +25,7 @@ class WelcomeController extends Controller {
 	{
 		return view('welcome')->with('cards', $this->cards->all());
 
-        //DebugBar::error("error");
+        Debugbar::error("error");
 	}
-
-	// public function test()
-	// {
-	// 	$hello = $this->cards->all();
-	
-	// 	return $hello[0]->name;
-
- //        //DebugBar::error("error");
-	// }
 
 }

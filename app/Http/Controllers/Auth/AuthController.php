@@ -76,6 +76,7 @@ class AuthController extends Controller
     public function getRecoverPassword()
     {
         return view('auth.recover');
+        
     }
 
     public function postTestEmail()
