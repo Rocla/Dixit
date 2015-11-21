@@ -33,13 +33,14 @@
 
 - Create the .env file, an exemple file is provided (you have to provide the database information)
 
-- open the terminal at the root folder and do the following commands
- > composer dump-autoload
- > composer update --no-scripts
- > composer update
- > php artisan vendor:publish
- > php artisan cache:clear
- > php artisan config:cache
- > php artisan migrate:install
- > php artisan migrate
- > php artisan db:seed
+- open the terminal at the root folder and do the following commands:
+
+ > composer dump-autoload<br>
+ > composer update --no-scripts<br> 
+ > composer update<br> 
+ > php artisan vendor:publish<br>
+ > php artisan cache:clear<br>
+ > php artisan config:cache<br>
+ > php artisan migrate:install<br>
+ > php artisan migrate<br>
+ > php artisan db:seed<br>
