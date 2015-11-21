@@ -105,7 +105,7 @@ class AuthController extends Controller
                 else
                 {
                     return("Sorry, this email doesn't exist.");
-                }                
+                }
             }
             
         }

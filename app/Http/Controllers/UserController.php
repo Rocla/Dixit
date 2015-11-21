@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Dixit\Http\Requests;
 use Dixit\Http\Controllers\Controller;
 
+use Dixit\Http\Requests\ProfileEditRequest;
+//use Validator;
 use Auth;
 
 class UserController extends Controller
@@ -16,16 +18,35 @@ class UserController extends Controller
 		$this->middleware('auth');
 	}
 
-	public function getEditProfile()
+	public function getProfileEdit()
 	{
-		return "get Edit Profile";
+		return view("user.profile-edit");
 	}
 
-	public function postEditProfile(EditProfileRequest $request)
+	public function postProfileEdit(ProfileEditRequest $request)
 	{
 		$user = Auth::user();
 
-		$user->email = $request->get('email');
+		if($request->has('username'))
+		{
+			$user->username = $request->get('username');
+		}
+
+		// if($request->has('email'))
+		// {
+		// 	if ($request->get('email') != $user->email){
+
+		// 		$rules = array('email' => 'unique:users');
+  //               $validator = Validator::make($request->get('email'), $rules);
+  //               if ($validator->passes()){
+  //                   $user->email = $request->get('email');
+  //               }
+  //               else
+  //               {
+  //               	static::$errors = $validation->messages();
+  //               }
+		// 	}
+		// }
 
 		if($request->has('password'))
 		{
@@ -34,7 +55,7 @@ class UserController extends Controller
 
 		if($request->has('question') || $request->has('answer'))
 		{
-			$user->question = bcrypt($request->get('question'));
+			$user->question = $request->get('question');
 			$user->answer = bcrypt($request->get('answer'));
 		}
 
