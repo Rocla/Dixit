@@ -19,6 +19,7 @@
                 </div>
                 @endif
                 <div class="panel-heading">Edit your Profile</div>
+                <br/>
 
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/profile-edit') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">

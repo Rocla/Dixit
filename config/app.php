@@ -136,6 +136,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -144,7 +145,6 @@ return [
         Dixit\Providers\AuthServiceProvider::class,
         Dixit\Providers\EventServiceProvider::class,
         Dixit\Providers\RouteServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         Dixit\Providers\BindingServiceProvider::class,
         
 
