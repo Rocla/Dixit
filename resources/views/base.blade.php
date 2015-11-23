@@ -1,13 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="_token" content="{!! csrf_token() !!}"/>
 
     <title>Dixit Online</title>
 
     <link href="{{asset('/libs/bootstrap-3.3.5/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <!--<link href="{{asset('/libs/fonts/lato.css')}}" rel="stylesheet" type="text/css">-->
 
     <script src="{{asset('/libs/jquery-2.1.4.min.js')}}"></script>
     <script src="{{asset('/libs/bootstrap-3.3.5/js/bootstrap.min.js')}}"></script>
@@ -46,7 +47,7 @@
 
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('#') }}">My Profile</a></li>
+                                <li><a href="{{ url('/user/profile-edit') }}">My Profile</a></li>
                                 <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                             </ul>
                         </li>
@@ -59,5 +60,10 @@
     @yield('content')
 
 </body>
+<script type="text/javascript">
+$.ajaxSetup({
+   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+});
+</script>
 </html>
 

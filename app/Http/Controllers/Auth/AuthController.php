@@ -11,6 +11,8 @@ use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Dixit\Http\Requests\PasswordRecoveryRequest;
 use Hash;
+use Input;
+use Request;
 
 class AuthController extends Controller
 {
@@ -49,8 +51,8 @@ class AuthController extends Controller
             'username'  =>  'required|max:255',
             'email'     =>  'required|email|max:255|unique:users',
             'password'  =>  'required|confirmed|min:6',
-            'public_key' =>  'required|max:255',
-            'private_key'    =>  'required|confirmed|max:255',
+            'question'  =>  'required|max:255',
+            'answer'    =>  'required|confirmed|max:255',
         ]);
     }
 
@@ -66,8 +68,8 @@ class AuthController extends Controller
             'username'  =>  $data['username'],
             'email'     =>  $data['email'],
             'password'  =>  bcrypt($data['password']),
-            'public_key'  =>  bcrypt($data['public_key']),
-            'private_key'    =>  bcrypt($data['private_key']),
+            'question'  =>  $data['question'],
+            'answer'    =>  bcrypt($data['answer']),
         ]);
     }
 
@@ -77,14 +79,46 @@ class AuthController extends Controller
         
     }
 
+    public function postTestEmail()
+    {
+        if(Request::ajax()){
+
+            $rules = [
+                'email' =>  'required|email|max:255',
+            ];
+
+            $data = Input::all();
+
+            $validator = Validator::make($data, $rules);
+
+            if ($validator->fails()){
+                
+            }
+            else
+            {
+                $rules = array('email' => 'unique:users');
+                $validator = Validator::make($data, $rules);
+                if ($validator->fails()){
+                    $user = User::where('email', $data['email'])->first();
+                    return($user->question);
+                }
+                else
+                {
+                    return("Sorry, this email doesn't exist.");
+                }
+            }
+            
+        }
+
+    }
+
     public function postRecoverPassword(PasswordRecoveryRequest $request)
     {
-        $publicKey = $request->get('public_key');
-        $privateKey = $request->get('private_key');
+        $answer = $request->get('answer');
 
         $user = User::where('email', $request->get('email'))->first();
 
-        if(Hash::check($publicKey,$user->public_key) && Hash::check($privateKey,$user->private_key))
+        if(Hash::check($answer,$user->answer))
         {
             $user->password = bcrypt($request->get('password'));
 
@@ -94,7 +128,7 @@ class AuthController extends Controller
             ->with(['success' => 'Congrats, you modified your password with success!']);
         }
 
-        return redirect('auth/recover-password')->withInput($request->only('email', 'public_key'))
-        ->withErrors('Sorry, the public key and/or the private key don\'t match');
+        return redirect('auth/recover-password')->withInput($request->only('email', 'question'))
+        ->withErrors('Sorry, the anwser is incorrect.');
     }
 }
