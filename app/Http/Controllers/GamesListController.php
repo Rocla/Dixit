@@ -5,23 +5,27 @@ namespace Dixit\Http\Controllers;
 use Illuminate\Http\Request;
 use Dixit\Http\Requests;
 use Dixit\Http\Controllers\Controller;
-use Dixit\Game;
+use Dixit\InterfaceDAO\GameInterface;
 use DebugBar;
 
 class GamesListController extends Controller
 {
-    protected $games;
+    protected $game;
     
-    public function __construct(Game $games)
+    public function __construct(GameInterface $game)
     {     
-        $this->games=$games;
+        $this->game=$game;
         $this->middleware('auth');
     }   
   
     public function getIndex()
     {  
-        return view('gameslist')->with('games', $this->games->all());
-        Debugbar::error('test');
-
+        return view('gameslist')->with('games', $this->game->all());  
+    }
+    
+    public function createGame(Request $request)
+    {
+        $this->game->createNewGame($request->all());
+        return redirect('games');
     }
 }

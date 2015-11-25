@@ -11,7 +11,8 @@ namespace Dixit\InterfaceDAO;
  *
  * @author arkeine
  */
-interface PlayerInterface {
+interface PlayerInterface
+{
     
     public function getPlayerInGame($gameId);
     

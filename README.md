@@ -35,6 +35,7 @@
 
 - open the terminal at the root folder and do the following commands:
 
+ > sudo chmod -R o+w storage<br>
  > composer dump-autoload<br>
  > composer update --no-scripts<br> 
  > composer update<br> 

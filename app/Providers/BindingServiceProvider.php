@@ -26,5 +26,6 @@ class BindingServiceProvider extends ServiceProvider
         $app = $this->app;
         $app->bind('Dixit\InterfaceDAO\PlayerInterface', 
                 'Dixit\ImplementationEloquentDAO\PlayerRepository');
+        $app->bind('Dixit\InterfaceDAO\GameInterface', 'Dixit\ImplementationEloquentDAO\GameRepository');
     }
 }
