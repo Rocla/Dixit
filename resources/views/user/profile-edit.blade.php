@@ -19,9 +19,10 @@
                 </div>
                 @endif
                 <div class="panel-heading">Edit your Profile</div>
-                <br/>
+                
+                <div class="panel-body">
 
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/profile-edit') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/profile-edit') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group">
@@ -81,6 +82,7 @@
                             </div>
                         </div>
                     </form>
+                </div>
             </div>
         </div>
     </div>

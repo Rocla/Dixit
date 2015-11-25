@@ -89,7 +89,7 @@
 		});
 
 		$("#validateEmail").click(function(){
-            document.getElementById("validateEmail").setAttribute('disabled')
+            $(this).attr('disabled', 'disabled');
             $.ajax({
 				url: 'testEmail',
 				type: "post",

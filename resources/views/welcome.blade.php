@@ -22,7 +22,7 @@
 
                 <div class="panel-body">
                     <center>
-                        <image src="images/cards/official/{!!$cards[0]->name!!}" id="cardImage"/><br/><br/>
+                        <image src="{{asset('/images/cards/official')}}/{!!$cards[0]->name!!}" id="cardImage"/><br/><br/>
                         <button type="button" id="previous">Previous</button>
                         <button type="button" id="next">Next</button>
                         <p id="cardName"></p>
@@ -37,8 +37,6 @@
     $(document).ready(function(){
         var i = 0;
 
-        $("#cardName").text("cards[" + i + "]");
-
         $("#next").click(function(){
             i++;
             $.ajax({
@@ -50,7 +48,7 @@
                 },
             success: function(data){
                 $("#cardName").text(data);
-                $("#cardImage").attr('src', "images/cards/official/"+data);
+                $("#cardImage").attr('src', "{{asset('/images/cards/official')}}"+"/"+data);
                 }
             });
         });
@@ -66,7 +64,7 @@
                 },
             success: function(data){
                 $("#cardName").text(data);
-                $("#cardImage").attr('src', "images/cards/official/"+data);
+                $("#cardImage").attr('src', "{{asset('/images/cards/official')}}"+"/"+data);
                 }
             });
         });

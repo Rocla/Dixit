@@ -35,9 +35,7 @@ class WelcomeController extends Controller {
 
 		$id = $request->input('id');
 
-		$allCards = $this->cards->all();
-
-		$countCards = $allCards->count();
+		$countCards = Card::count();
 
 		$id = $id % $countCards;
 
@@ -46,12 +44,7 @@ class WelcomeController extends Controller {
 			$id += $countCards;
 		}
 
-		if ($id >= $countCards){
-			return($allCards[0]->name);
-		}
-		else
-		{
-			return($allCards[$id]->name);
-		}
+		return(Card::where('pk_id',$id)->first()->name);
+
 	}
 }
