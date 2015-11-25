@@ -22,6 +22,8 @@
 Route::post('cards/imageByID', 'WelcomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::get('game/{gameId}', 'GameController@getPlayers');
+Route::post('games', 'GamesListController@createGame');
+
 
 Route::controllers
 ([

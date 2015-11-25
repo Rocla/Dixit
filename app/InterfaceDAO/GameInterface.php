@@ -7,7 +7,8 @@ namespace Dixit\InterfaceDAO;
  *
  * @author claudiag.gheorghe
  */
-class GameInterface 
+interface GameInterface 
 {
-    public function all(){}
+    public function all();
+    public function createNewGame(Array $inputs);
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNameToGames extends Migration
+class AddNoPlayersToGames extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddNameToGames extends Migration
     {
         Schema::table('games', function(Blueprint $table)
         {
-            $table->string('name', 60)->after('pk_id');
+            $table->integer('no_players')->after('language');
         });
     }
 
@@ -27,7 +27,7 @@ class AddNameToGames extends Migration
     {
         Schema::table('games', function(Blueprint $table)
         {
-            $table->dropColumn('name');
+            $table->dropColumn('no_players');
         });
     }
 }
