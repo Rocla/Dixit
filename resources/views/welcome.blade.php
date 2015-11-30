@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
 
                 @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -18,14 +18,18 @@
                     </table>
                 </div>
                 @endif
-                <div class="panel-heading">Welcome page for Guests</div>
+                <div class="panel-heading">{{ trans('welcome.heading') }}</div>
 
                 <div class="panel-body">
+                    <p>{{ trans('welcome.what_is_dixit') }}</p>
+                    <p>{{ trans('welcome.what_is_dixit_online') }}</p>
+                    <p>{{ trans('welcome.how_to_play') }}</p>
                     <center>
-                        <image src="{{asset('/images/cards/official')}}/{!!$cards[0]->name!!}" id="cardImage"/><br/><br/>
-                        <button type="button" id="previous">Previous</button>
-                        <button type="button" id="next">Next</button>
-                        <p id="cardName"></p>
+                        <p>{{ trans('welcome.cards_show') }}</p>
+                        <button type="button" id="previous" class="btn btn-lg btn-primary">{{ trans('welcome.previous') }}</button>
+                        <button type="button" id="next" class="btn btn-lg btn-primary">{{ trans('welcome.next') }}</button>
+                        <br/><br/>
+                        <image id="cardImage"/>
                     </center>
                 </div>
             </div>
@@ -36,6 +40,19 @@
 <script type="text/javascript">            
     $(document).ready(function(){
         var i = 0;
+
+        $.ajax({
+                url: 'cards/imageByID',
+                type: "post",
+                data: {
+                    'id':i,
+                    '_token': $('input[name=_token]').val()
+                },
+            success: function(data){
+                $("#cardName").text(data);
+                $("#cardImage").attr('src', "{{asset('/images/cards/official')}}"+"/"+data);
+                }
+            });
 
         $("#next").click(function(){
             i++;

@@ -39,7 +39,7 @@ class WelcomeController extends Controller {
 
 		$id = $id % $countCards;
 
-		if ($id < 0)
+		if ($id <= 0)
 		{
 			$id += $countCards;
 		}
