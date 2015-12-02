@@ -4,8 +4,8 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Login</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">{{ trans('login.heading') }}</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 	                <div class="alert alert-danger">
@@ -24,18 +24,23 @@
 					</div>
 					@endif
 
+					<center>
+						<img src="{{asset('/images/other/login.jpg')}}"/>
+					</center>
+					<br/>
+
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
+							<label class="col-md-4 control-label">{{ trans('login.email') }}</label>
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Your password</label>
+							<label class="col-md-4 control-label">{{ trans('login.password') }}</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
 							</div>
@@ -45,7 +50,7 @@
 							<div class="col-md-6 col-md-offset-4">
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" name="remember"> I can remember you for a Cookie
+										<input type="checkbox" name="remember"> {{ trans('login.cookie') }}
 									</label>
 								</div>
 							</div>
@@ -53,9 +58,9 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Login me in</button>
+								<button type="submit" class="btn btn-primary">{{ trans('login.login') }}</button>
 
-								<a class="btn btn-link" href="{{ url('/auth/recover-password') }}">Forgot Your Password?</a>
+								<a class="btn btn-link" href="{{ url('/auth/recover-password') }}">{{ trans('login.forgot') }}</a>
 							</div>
 						</div>
 					</form>

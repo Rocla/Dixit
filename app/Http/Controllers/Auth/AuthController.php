@@ -104,7 +104,7 @@ class AuthController extends Controller
                 }
                 else
                 {
-                    return("Sorry, this email doesn't exist.");
+                    return('0');
                 }
             }
             
@@ -125,10 +125,10 @@ class AuthController extends Controller
             $user->save();
 
             return redirect('auth/login')
-            ->with(['success' => 'Congrats, you modified your password with success!']);
+            ->with(['success' => '2']);
         }
 
         return redirect('auth/recover-password')->withInput($request->only('email', 'question'))
-        ->withErrors('Sorry, the anwser is incorrect.');
+        ->withErrors('1');
     }
 }

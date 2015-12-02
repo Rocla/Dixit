@@ -18,32 +18,26 @@
                     </table>
                 </div>
                 @endif
-                <div class="panel-heading">{{ trans('game.heading') }}</div>
+                <div class="panel-heading">{{ trans('rules.heading') }}</div>
 
                 <div class="panel-body">
                     <center>
-                        <image src="images/cards/official/{!!$cards[0]->name!!}" id="image"/><br/><br/>
-                        <button type="button" id="next">NEXT</button>
-                        <p id="test">test text is here</p>
+                        <img src="{{asset('/images/logos/dixit_logo.jpeg')}}"/>
                     </center>
+                    <p><h3>{{ trans('rules.what_is_dixit_title') }}</h3></p>
+                    <p>{{ trans('rules.what_is_dixit_text') }}</p>
+                    <p><h3>{{ trans('rules.rules_title') }}</h3></p>
+                    <p>{{ trans('rules.rules_text') }}</p>
+                    <p><h3>{{ trans('rules.scoring_title') }}</h3></p>
+                    <p>{{ trans('rules.scoring_text') }}</p>
+                    <p><h3>{{ trans('rules.end_of_game_title') }}</h3></p>
+                    <p>{{ trans('rules.end_of_game_text') }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">            
-    $(document).ready(function(){
-        var i = 0;
-        $("#test").text("cards[" + i + "]");
-        $("#next").click(function(){
-            i++;
-            $("#image").attr('src', "images/cards/official/{!!$cards[1]->name!!}");
-            $("#test").text("cards[" + i + "]");
-            // Romain: J'arrive pas à creer une requete incrementalle avec {!!$cards[n+1]
-        });
-    });
-</script>
 @endsection
 
 
