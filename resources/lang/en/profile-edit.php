@@ -22,12 +22,5 @@ return [
     'answer' => 'Your answer to recover your password',
     'answer_confirm' => 'Confirm your answer',
     'modify' => 'Modify',
-    'heading' => 'Edit your Profile',
-    'heading' => 'Edit your Profile',
-    'heading' => 'Edit your Profile',
-    'heading' => 'Edit your Profile',
-    'heading' => 'Edit your Profile',
-    'heading' => 'Edit your Profile',
     
-
 ];

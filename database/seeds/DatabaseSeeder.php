@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
+        $this->command->info('Seeding official deck of cards');
         $this->call(CardsOfficialDeckSeeder::class);
-        $this->command->info('Card table seeded with official deck');
+        $this->command->info('Seeding test users');
+        $this->call(TestUsersSeeder::class);
 
         Model::reguard();
     }

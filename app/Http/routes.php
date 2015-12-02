@@ -20,6 +20,7 @@
 //Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
 
 Route::post('cards/imageByID', 'WelcomeController@postImageByID');
+Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::get('game/{gameId}', 'GameController@getPlayers');
 Route::post('games', 'GamesListController@createGame');

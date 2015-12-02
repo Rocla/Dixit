@@ -20,7 +20,7 @@ class CardsOfficialDeckSeeder extends Seeder
         $file =__DIR__.'/../../public/images/cards/official/';
         
         foreach( new DirectoryIterator($file) as $file) {
-            if( $file->isFile() === TRUE && $file->getFilename() != ".DS_Store") {    
+            if( $file->isFile() === TRUE && $file->getFilename() != ".DS_Store" && $file->getFilename() != ".Thumbs" ) {    
                 $this->command->info($file->getFilename());            
                 $card = new Card();
                 $card->fk_decks = $deck->id;
