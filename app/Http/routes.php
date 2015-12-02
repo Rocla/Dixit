@@ -20,6 +20,7 @@
 //Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
 
 Route::post('cards/imageByID', 'WelcomeController@postImageByID');
+Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::get('game/{gameId}', 'GameController@getPlayers');
 Route::post('games', 'GamesListController@createGame');
@@ -27,12 +28,12 @@ Route::post('addPlayer', 'GameListController@addPlayer');
 
 Route::controllers
 ([
-
+	'board'	=>	'BoardController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
-	'user'	=>	'UserController','home'	=>	'HomeController',
+	'user'	=>	'UserController',
 	'games' =>	'GamesListController',
 	'/'     => 	'WelcomeController',
         
