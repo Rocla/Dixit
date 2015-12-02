@@ -25,10 +25,11 @@ Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::get('game/{gameId}', 'GameController@getPlayers');
 Route::post('games', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
+Route::get('board/{boardId}', 'BoardController@getBoard');
 
 Route::controllers
 ([
-	'board'	=>	'BoardController',
+	'board'	=>	'GamesListController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',

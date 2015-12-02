@@ -23,13 +23,15 @@
                 <div class="panel-body">
                     Adminitration panel:
                      <div class="well" float="left">
-                        <p id="game_status">unknown</p>
                         <button type='button' id="edit_game" class="btn btn-primary">Edit</button>
                         <button type='button' id="start_game" class="btn btn-primary" disabled>Start</button>
                     </div>
                      Game Status:
                     <div class="well" float="left">
-                        <p id="game_status">unknown</p>
+                         @foreach ($hand as $key => $value)
+                            <li>{{ $elem }}</li>
+                        @endforeach
+                        <p id="game_status"></p>
                     </div>
                     
                     <div>
@@ -91,13 +93,13 @@
                     Hand:
                     <div class="well">
                         <div class="hand">
-                            <img id="drag_card_1" src="{{asset('/images/cards/official/carte_1.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_2" src="{{asset('/images/cards/official/carte_2.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_3" src="{{asset('/images/cards/official/carte_3.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_4" src="{{asset('/images/cards/official/carte_4.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_5" src="{{asset('/images/cards/official/carte_5.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_6" src="{{asset('/images/cards/official/carte_6.png')}}" width="100%" draggable="true" ondragstart="drag(event)">
-                        </div>
+                           <!--  <img id="drag_card_1" src="{{asset('/images/cards/official/')}}/{!!$hand[0]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_2" src="{{asset('/images/cards/official/')}}/{!!$hand[1]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_3" src="{{asset('/images/cards/official/')}}/{!!$hand[2]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_4" src="{{asset('/images/cards/official/')}}/{!!$hand[3]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_5" src="{{asset('/images/cards/official/')}}/{!!$hand[4]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_6" src="{{asset('/images/cards/official/')}}/{!!$hand[5]!!}" width="100%" draggable="true" ondragstart="drag(event)">
+                         --></div>
                     </div>
                     
                 </div>
@@ -116,6 +118,15 @@
 </style>
 
 <script type="text/javascript"> 
+
+$(document).ready(function(){
+    $imageRatio = 500/330;
+    resize_height_cards();
+    $( window ).resize(function() {
+        resize_height_cards();
+    });
+});
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -132,18 +143,12 @@ function drop(ev) {
     ev.target.appendChild(document.getElementById(data));
 }
   
-$(document).ready(function(){
-    $imageRatio = 500/330;
-    resize_height_cards();
-    $( window ).resize(function() {
-        resize_height_cards();
-    });
-    
-});
+
 function resize_height_cards(){
-        $imageHeight = $(".card_on_board").width()*$imageRatio;
-        $(".card_on_board").css('height', $imageHeight + 'px');
-    }
+    $imageHeight = $(".card_on_board").width()*$imageRatio;
+    $(".card_on_board").css('height', $imageHeight + 'px');
+}
+
 </script>
 
 @endsection
