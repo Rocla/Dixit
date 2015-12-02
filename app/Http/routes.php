@@ -28,6 +28,7 @@ Route::post('games', 'GamesListController@createGame');
 
 Route::controllers
 ([
+	'board'	=>	'BoardController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',
