@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
 
             <div class="panel panel-primary">
-                    @if(count($games)!=1)                         
+                    @if($games->isEmpty())                         
                         <div class="panel-heading">{{ trans('gamelist.heading') }}</div>
 
                             <div class="panel-body">                          
@@ -18,7 +18,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">{{ trans('gamelist.language') }}:</label>					                                    
-                                        <select name="lang">
+                                        <select name="language">
                                             <option value="fr">{{ trans('gamelist.french') }}</option>
                                             <option value="en">{{ trans('gamelist.english') }}</option>
                                             <option value="de">{{ trans('gamelist.german') }}</option>
@@ -41,7 +41,7 @@
                                         <strong>  {{$game->no_players }}  </strong> players required
                                     </div> 
                                     <div class="col-md-8 col-md-offset-5">
-                                        <input class="btn btn-primary" type="submit" value="Join">
+                                        <input id="join" class="btn btn-primary" type="submit"  value="{{trans('gamelist.join')}}" onClick="" >
                                     </div>  
                                 </div>
                             @endforeach                 
@@ -53,6 +53,7 @@
             </div>
         </div>
     </div>
-</div>
-
+<script type="text/javascript">
+    
+</script>
 @endsection

@@ -23,6 +23,6 @@ return [
     'player_number' => 'Number of players',
     'games_list' => 'List of games',
     'send' => 'Send',
-    
+    'join' => 'Join',
 
 ];

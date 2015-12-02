@@ -4,15 +4,14 @@ namespace Dixit\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Dixit\Http\Requests;
-use Dixit\Http\Controllers\Controller;
-use Dixit\InterfaceDAO\GameInterface;
+use Dixit\Game;
 use DebugBar;
 
 class GamesListController extends Controller
 {
     protected $game;
     
-    public function __construct(GameInterface $game)
+    public function __construct(Game $game)
     {     
         $this->game=$game;
         $this->middleware('auth');
@@ -25,7 +24,12 @@ class GamesListController extends Controller
     
     public function createGame(Request $request)
     {
-        $this->game->createNewGame($request->all());
+        Game::create(array_merge($request->all(), ['started' => 0, 'turn_timeout' => 3]));
         return redirect('games');
+    }
+    
+    public function addPlayer()
+    {
+        return redirect('home');
     }
 }
