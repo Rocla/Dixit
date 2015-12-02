@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                    @if(count($games)!=1)                         
+                    @if($games->isEmpty())                         
                         <div class="panel-heading">Create new game</div>
                             <div class="panel-body">                          
                                 <form action="{{ url('/games') }}" method="POST"> 
@@ -30,11 +30,19 @@
                                 </form>                                                      
                             </div>                        
                     @else
-                        <div class="panel-heading">List of games:</div>
-                            
-                            
-                        </div>
-                        
+                        <div class="panel-heading">List of games:</div>                           
+                            @foreach($games as $game) 
+                                <div class="panel-body">
+                                    <div class="col-md-8 col-md-offset-5"> <strong>Game: {{$game->name}}</strong> </div>
+                                    <div class="col-md-8 col-md-offset-4">Language: {{$game->language }},    
+                                        <strong>  {{$game->no_players }}  </strong> players required
+                                    </div> 
+                                    <div class="col-md-8 col-md-offset-5">
+                                        <input class="btn btn-primary" type="submit" value="Join">
+                                    </div>  
+                                </div>
+                            @endforeach                 
+                        </div>                        
                     @endif                   
                
             </div>

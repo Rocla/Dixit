@@ -22,8 +22,7 @@ class HomeController extends Controller
     
     public function getIndex()
     {       
-        return view('welcome')->with('cards', $this->cards->all());
-        
+        return view('welcome')->with('cards', $this->cards->all());        
     }
     
 }

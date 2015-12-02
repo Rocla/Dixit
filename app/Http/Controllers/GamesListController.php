@@ -16,8 +16,8 @@ class GamesListController extends Controller
     {     
         $this->game=$game;
         $this->middleware('auth');
-    }   
-  
+    }  
+    
     public function getIndex()
     {  
         return view('gameslist')->with('games', $this->game->all());  

@@ -27,9 +27,8 @@ Route::post('games', 'GamesListController@createGame');
 
 Route::controllers
 ([
-	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
-	'user'	=>	'UserController',
+	'user'	=>	'UserController','home'	=>	'HomeController',
 	'games' =>	'GamesListController',
 	'/'     => 	'WelcomeController',
         
