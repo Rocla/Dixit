@@ -17,7 +17,6 @@ class TestGamesSeeder extends Seeder
     	$this->command->info('Game 1');  
     	$game1 = new Game();
     	$game1->name = 'Game 1';
-    	$game1->id_storyteller = 1;
     	$game1->id_owner = 1;
     	$game1->language = 'en';
     	$game1->no_players = 3;
@@ -27,7 +26,6 @@ class TestGamesSeeder extends Seeder
     	$this->command->info('Game 2');  
     	$game2 = new Game();
     	$game2->name = 'Game 2';
-    	$game2->id_storyteller = 1;
     	$game2->id_owner = 1;
     	$game2->language = 'fr';
     	$game2->no_players = 3;
@@ -37,7 +35,6 @@ class TestGamesSeeder extends Seeder
     	$this->command->info('Game 3');  
     	$game3 = new Game();
     	$game3->name = 'Game 3';
-    	$game3->id_storyteller = 2;
     	$game3->id_owner = 2;
     	$game3->language = 'de';
     	$game3->no_players = 3;
@@ -47,7 +44,6 @@ class TestGamesSeeder extends Seeder
         $this->command->info('Game 4');  
         $game4 = new Game();
         $game4->name = 'Game 4';
-        $game4->id_storyteller = 1;
         $game4->id_owner = 1;
         $game4->language = 'fr';
         $game4->no_players = 3;
