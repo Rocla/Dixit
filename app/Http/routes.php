@@ -22,20 +22,18 @@
 Route::post('cards/imageByID', 'WelcomeController@postImageByID');
 Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
-Route::get('game/{gameId}', 'GameController@getPlayers');
-Route::post('games', 'GamesListController@createGame');
+Route::post('play', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
-Route::get('board/{boardId}', 'BoardController@getBoard');
+Route::get('play/{gameId}', 'BoardController@getBoard');
 
 Route::controllers
 ([
-	'board'	=>	'GamesListController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
 	'user'	=>	'UserController',
-	'games' =>	'GamesListController',
+	'play' =>	'GamesListController',
 	'/'     => 	'WelcomeController',
         
  ]);

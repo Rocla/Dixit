@@ -25,6 +25,7 @@ class UpdateGamesAddStorytellerOwner extends Migration
      */
     public function down()
     {
-        //
+        $table->dropColumn('id_storyteller');
+        $table->dropColumn('id_owner');
     }
 }

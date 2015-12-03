@@ -29,25 +29,25 @@ class BoardController extends Controller
 
     public function getBoard($board_id)
     {
-    	DB::table('hands')->where('fk_players', '=', Auth::user()->id)->delete();
+    	//DB::table('hands')->where('fk_players', '=', Auth::user()->id)->delete();
 
-    	$player_hand = DB::table('hands');
-    	$randomHand = [];
-    	$i=0;
-    	while($i<6){
-    		$randomCardID = $this->getRandomCardID();
-    		if(!array_key_exists($randomCardID,$randomHand)){
-    			$player_hand->insert(['fk_players' => Auth::user()->id, 'fk_cards' => $randomCardID]);
-    			array_push($randomHand, $randomCardID);
-    			$i++;
-    		}
-    	}
+    	//Auth::user()->hand()->delete();
 
-    	$hand = $player_hand->where('fk_players', Auth::user()->id)->select('fk_cards')->get();
+    	// $player_hand = DB::table('hands');
+    	// $randomHand = [];
+    	// $i=0;
+    	// while($i<6){
+    	// 	$randomCardID = $this->getRandomCardID();
+    	// 	if(!array_key_exists($randomCardID,$randomHand)){
+    	// 		$player_hand->insert(['fk_players' => Auth::user()->id, 'fk_cards' => $randomCardID]);
+    	// 		array_push($randomHand, $randomCardID);
+    	// 		$i++;
+    	// 	}
+    	// }
 
-    	return $hand;
+    	// $hand = $player_hand->where('fk_players', Auth::user()->id)->select('fk_cards')->get();
 
-        return view('board')->with('hand', $hand);
+        return view('board')->with('board_id', $board_id);
     }
 
     private function getRandomCard()
