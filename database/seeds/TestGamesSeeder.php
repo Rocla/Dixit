@@ -20,7 +20,7 @@ class TestGamesSeeder extends Seeder
     	$game1->id_owner = 1;
     	$game1->language = 'en';
     	$game1->no_players = 3;
-    	$game1->turn_timout = 30;
+    	$game1->turn_timeout = 30;
     	$game1->save();
 
     	$this->command->info('Game 2');  
@@ -29,7 +29,7 @@ class TestGamesSeeder extends Seeder
     	$game2->id_owner = 1;
     	$game2->language = 'fr';
     	$game2->no_players = 3;
-    	$game2->turn_timout = 60;
+    	$game2->turn_timeout = 60;
     	$game2->save();
 
     	$this->command->info('Game 3');  
@@ -38,7 +38,7 @@ class TestGamesSeeder extends Seeder
     	$game3->id_owner = 2;
     	$game3->language = 'de';
     	$game3->no_players = 3;
-    	$game3->turn_timout = 10;
+    	$game3->turn_timeout = 10;
     	$game3->save();
 
         $this->command->info('Game 4');  
@@ -47,7 +47,7 @@ class TestGamesSeeder extends Seeder
         $game4->id_owner = 1;
         $game4->language = 'fr';
         $game4->no_players = 3;
-        $game4->turn_timout = 60;
+        $game4->turn_timeout = 60;
         $game4->started = 1;
         $game4->save();
 

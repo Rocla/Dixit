@@ -31,13 +31,13 @@ Route::get('games/{gameId}', 'GamesListController@delete');
 
 Route::controllers
 ([
-        'board'	=>	'BoardController',
+    'board'	=>	'BoardController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
 	'user'	=>	'UserController',
-	'play' =>	'GamesListController',
+	//'play' =>	'GamesListController',
 	'/'     => 	'WelcomeController',
         
  ]);
