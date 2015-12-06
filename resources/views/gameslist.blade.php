@@ -8,7 +8,7 @@
                 <input id="newGame" class="btn btn-primary" type="submit"  value="{{ trans('gamelist.heading') }}">        
                 <div  class="panel-heading" style="visibility: hidden"></div>
                     <div id="div_newGame" class="panel-body" style="display: none;">                          
-                        <form action="{{ url('/games') }}" method="POST"> 
+                        <form action="{{ url('/play') }}" method="POST"> 
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('gamelist.gamename') }}:</label>					                                    

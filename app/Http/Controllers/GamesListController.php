@@ -26,7 +26,7 @@ class GamesListController extends Controller
     public function createGame(Request $request)
     {
         Game::create(array_merge($request->all(), ['id_owner'=>$request->user()->id,'started' => 0, 'turn_timeout' => 3]));       
-        return redirect('games');
+        return redirect('play');
     }
     
     public function addPlayer($gameId, $playerId)
