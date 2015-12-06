@@ -33,11 +33,12 @@
                     <label class="col-md-4 control-label">No game available. Create a new one.</label>no game
                     @else
                         <div class="panel-heading">List of games:</div>                           
-                            @foreach($games as $game) 
+                            @foreach($games as $game)                             
                                     <div class="panel-body">
                                     <div class="col-md-8 col-md-offset-5"> <strong>Game: {{$game->name}}</strong> </div>
-                                    <div class="col-md-8 col-md-offset-4">Language: {{$game->language }},    
-                                        <strong>  {{$game->no_players }}  </strong> players required
+                                    <div class="col-md-8 col-md-offset-2">Language: {{$game->language }},    
+                                        <strong> {{($game->no_players)}} </strong> players required, 
+                                        We still need <strong>  {{($game->no_players)-($game->players->count())}} </strong> to start the game
                                     </div> 
                                     <div class="col-md-8 col-md-offset-5">                                        
                                         {!! link_to_action('GamesListController@addPlayer', trans('gamelist.join'), [$game->pk_id,Auth::user()->id], ['class' => 'btn btn-primary']) !!}
