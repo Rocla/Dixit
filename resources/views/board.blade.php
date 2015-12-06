@@ -76,6 +76,17 @@
                         </div>
                     </div>
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    Hand:
+                    <div class="well">
+                        <div class="hand"><center>
+                            <img id="drag_card_1" src="{{asset('/images/cards/official/')}}/carte_1.png" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_2" src="{{asset('/images/cards/official/')}}/carte_2.png" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_3" src="{{asset('/images/cards/official/')}}/carte_3.png" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_4" src="{{asset('/images/cards/official/')}}/carte_4.png" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_5" src="{{asset('/images/cards/official/')}}/carte_5.png" width="100%" draggable="true" ondragstart="drag(event)">
+                            <img id="drag_card_6" src="{{asset('/images/cards/official/')}}/carte_6.png" width="100%" draggable="true" ondragstart="drag(event)">
+                        </center></div>
+                    </div>
                     Actions:
                     <div class="well" float="left">
                         Timer: <p id="timer_turn"></p>
@@ -88,18 +99,6 @@
                         </center>
 
                     </div>
-                    Hand:
-                    <div class="well">
-                        <div class="hand">
-                            <img id="drag_card_1" src="{{asset('/images/cards/official/')}}/carte_1.png" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_2" src="{{asset('/images/cards/official/')}}/carte_2.png" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_3" src="{{asset('/images/cards/official/')}}/carte_3.png" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_4" src="{{asset('/images/cards/official/')}}/carte_4.png" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_5" src="{{asset('/images/cards/official/')}}/carte_5.png" width="100%" draggable="true" ondragstart="drag(event)">
-                            <img id="drag_card_6" src="{{asset('/images/cards/official/')}}/carte_6.png" width="100%" draggable="true" ondragstart="drag(event)">
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
         </div>
