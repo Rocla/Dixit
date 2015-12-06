@@ -31,9 +31,8 @@ class GamesListController extends Controller
     
     public function addPlayer($gameId, $playerId)
     {
-        \DebugBar::error('test'.$gameId.$playerId);
-        //To do add player
-        //return redirect('game/'.$gameId);
+        Player::create(['fk_user_id'=>$playerId, 'fk_games'=>$gameId]);
+        return redirect()->action('BoardController@getBoard',[$gameId]);
     }
     public function delete($gameId)
     {

@@ -33,5 +33,5 @@ class Player extends Model
 
 	protected $table = 'players';
 	protected $primarykey = 'pk_id';
-	protected $fillable = ['pk_user_id'];
+	protected $fillable = ['fk_user_id', 'fk_games'];
 }

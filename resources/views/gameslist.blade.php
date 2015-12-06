@@ -30,7 +30,7 @@
                         </form>                                                      
                     </div>    
                     @if($games->isEmpty())  
-                    no game
+                    <label class="col-md-4 control-label">No game available. Create a new one.</label>no game
                     @else
                         <div class="panel-heading">List of games:</div>                           
                             @foreach($games as $game) 
