@@ -9,6 +9,7 @@
     <link href="{{asset('/libs/bootstrap-3.3.5/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
     <link href="{{asset('/libs/bootstrap-3.3.5/css/lavish_bootstrap.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('/libs/css/dixit.css')}}" rel="stylesheet" type="text/css">
     <!--<link href="{{asset('/libs/fonts/lato.css')}}" rel="stylesheet" type="text/css">-->
 
     <script src="{{asset('/libs/jquery-2.1.4.min.js')}}"></script>
@@ -31,10 +32,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('rules') }}">{{ trans('base.rules') }}</a></li>
-                    <li><a href="{{ url('games') }}">{{ trans('base.game_tables') }}</a></li>
-                    @if (Auth::check())
-                        <li><a href="{{ url('#') }}">{{ trans('base.current_game') }}</a></li>
-                    @endif
+                    <li><a href="{{ url('play') }}">{{ trans('base.play') }}</a></li>
+                    <li><a href="{{ url('play/1') }}">DEBUG</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

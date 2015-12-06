@@ -13,16 +13,6 @@ return [
     |
     */
 
-    'title' => 'Dixit Online',
-    'name' => 'Dixit Online',
-    'toggle_nav' => 'Toggle Navigation',
-    'rules' => 'Rules',
-    'play' => 'Play',
-    'login' => 'Login',
-    'register' => 'Register',
-    'profile' => 'My Profile',
-    'logout' => 'Logout',
-    'hello_message' => 'Hello',
-    'readme' => 'License',
+    'heading' => 'You are playing on the board:',
 
 ];

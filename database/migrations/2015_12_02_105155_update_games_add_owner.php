@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateGamesAddStorytellerOwner extends Migration
+class UpdateGamesAddOwner extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class UpdateGamesAddStorytellerOwner extends Migration
     public function up()
     {
         Schema::table('games',function(Blueprint $table){ 
-            $table->integer('id_storyteller')->unsigned()->after('name')->nullable();
-            $table->integer('id_owner')->unsigned()->after('id_storyteller');
+            $table->integer('id_owner')->unsigned();
         });
     }
 
@@ -25,6 +24,6 @@ class UpdateGamesAddStorytellerOwner extends Migration
      */
     public function down()
     {
-        //
+        $table->dropColumn('id_owner');
     }
 }

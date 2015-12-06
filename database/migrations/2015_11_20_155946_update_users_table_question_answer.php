@@ -25,6 +25,7 @@ class UpdateUsersTableQuestionAnswer extends Migration
      */
     public function down()
     {
-        //
+        $table->renameColumn('question', 'public_key');
+        $table->renameColumn('answer', 'private_key');
     }
 }

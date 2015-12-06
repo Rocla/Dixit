@@ -1,0 +1,84 @@
+.card_on_board{
+	width: 14%; 
+	float: left;
+	margin-left: 1.3%; 
+	margin-right: 1.3%; 
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+.hand {
+	margin: auto;
+	position: relative;
+	width: 50%;
+}
+
+.hand img {
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    width: 30%;
+}
+
+.hand img:nth-of-type(1) {
+    left: 50px;
+    top: 50px;
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    -o-transform: rotate(5deg);
+    transform: rotate(5deg);
+}
+ 
+.hand img:nth-of-type(2) {
+    left: 150px;
+    top: 100px;
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+}
+ 
+.hand img:nth-of-type(3) {
+    left: 250px;
+    top: 50px;
+    -webkit-transform: rotate(7deg);
+    -moz-transform: rotate(7deg);
+    -o-transform: rotate(7deg);
+    transform: rotate(7deg);
+}
+ 
+.hand img:nth-of-type(4) {
+    left: 350px;
+    top: 150px;
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    transform: rotate(-3deg);
+}
+ 
+.hand img:nth-of-type(5) {
+    left: 450px;
+    top: 50px;
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    -o-transform: rotate(2deg);
+    transform: rotate(2deg);
+}
+
+.hand img:nth-of-type(6) {
+    left: 550px;
+    top: 150px;
+    -webkit-transform: rotate(-5deg);
+    -moz-transform: rotate(-5deg);
+    -o-transform: rotate(-5deg);
+    transform: rotate(-5deg);
+}
+
+.hand img:hover {
+    -webkit-transform: rotate(380deg) scale(1.5);
+    -moz-transform: rotate(380deg) scale(1.5);
+    -o-transform: rotate(380deg) scale(1.5);
+    transform: rotate(380deg) scale(1.5);
+    z-index: 100;
+}

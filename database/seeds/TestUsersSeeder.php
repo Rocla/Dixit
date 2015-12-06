@@ -20,9 +20,9 @@ class TestUsersSeeder extends Seeder
         	$user = new User();
         	$user->username = 'Test User';
         	$user->email = $email;
-        	$user->password = 'test';
+        	$user->password = bcrypt('test');
         	$user->question = 'test';
-        	$user->answer = 'test';
+        	$user->answer = bcrypt('test');
         	$user->save();
         	$i++;
         }
