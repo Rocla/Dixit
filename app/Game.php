@@ -23,5 +23,5 @@ class Game extends Model
 
 	protected $table = 'games';
 	protected $primarykey = 'pk_id';
-	protected $fillable = array('name', 'language', 'no_players' ,'started', 'turn_timeout');
+	protected $fillable = array('name', 'id_storyteller', 'id_owner', 'language', 'no_players' ,'started', 'turn_timeout');
 }

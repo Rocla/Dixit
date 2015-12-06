@@ -24,11 +24,12 @@ Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::get('game/{gameId}', 'GameController@getPlayers');
 Route::post('games', 'GamesListController@createGame');
-Route::post('addPlayer', 'GameListController@addPlayer');
+Route::get('games/{gameId}/{playId}', 'GamesListController@addPlayer');
+Route::get('games/{gameId}', 'GamesListController@delete');
 
 Route::controllers
 ([
-	'board'	=>	'BoardController',
+	'board'	=>	'BoardController',        
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',
