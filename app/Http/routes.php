@@ -24,9 +24,9 @@ Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@createGame');
 //Route::post('games', 'GamesListController@createGame');
-Route::get('play/{gameId}', 'BoardController@getBoard');
+Route::get('play/{gameId}', ['uses'=>'BoardController@getBoard', 'as'=>'play']);
 Route::get('games/{gameId}/{playId}', 'GamesListController@addPlayer');
-Route::get('games/{gameId}', 'GamesListController@delete');
+//Route::get('games/{gameId}', 'GamesListController@delete');
 
 
 Route::controllers
@@ -37,7 +37,7 @@ Route::controllers
 	'home'	=>	'HomeController',
 	'auth'	=>	'Auth\AuthController',
 	'user'	=>	'UserController',
-	//'play' =>	'GamesListController',
+	'play' =>	'GamesListController',
 	'/'     => 	'WelcomeController',
         
  ]);

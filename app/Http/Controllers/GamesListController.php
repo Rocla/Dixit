@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Dixit\Http\Requests;
 use Dixit\Game;
 use Dixit\Player;
+use Dixit\User;
 use DebugBar;
 
 class GamesListController extends Controller
@@ -31,8 +32,11 @@ class GamesListController extends Controller
     
     public function addPlayer($gameId, $playerId)
     {
+//      $user=User::find($playerId);
+//      $user->games()->attach($gameId);
         Player::create(['fk_user_id'=>$playerId, 'fk_games'=>$gameId]);
-        return redirect()->action('BoardController@getBoard',[$gameId]);
+        return redirect()->route('play', [$gameId]);
+        
     }
     public function delete($gameId)
     {

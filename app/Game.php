@@ -10,6 +10,10 @@ class Game extends Model
 	{
 		return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id');
 	}
+//        public function users()
+//        {
+//        return $this->belongsToMany('Dixit\User','players', 'pk_id', 'fk_games')->withPivot('pk_id');
+//        }  
 
 	public function turns()
 	{
@@ -20,6 +24,10 @@ class Game extends Model
 	{
 		return $this->belongsToMany('Dixit\Deck', 'games_based_on_decks', 'fk_games', 'fk_decks');
 	}
+        public function playersId()
+        {
+            return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id')->select('fk_user_id');
+        }
 
 	protected $table = 'games';
 	protected $primarykey = 'pk_id';

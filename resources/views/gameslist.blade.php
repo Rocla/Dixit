@@ -40,10 +40,17 @@
                                         <strong> {{($game->no_players)}} </strong> players required, 
                                         We still need <strong>  {{($game->no_players)-($game->players->count())}} </strong> to start the game
                                     </div> 
-                                    <div class="col-md-8 col-md-offset-5">                                        
-                                        {!! link_to_action('GamesListController@addPlayer', trans('gamelist.join'), [$game->pk_id,Auth::user()->id], ['class' => 'btn btn-primary']) !!}
-                                        
-                                    </div>  
+                                    
+                                    @forelse($game->playersId as $userId)
+                                        @if ($userId->fk_user_id == Auth::user()->id)
+                                            <label class="col-md-7 col-md-offset-5">Game in progress</label>
+                                        @endif 
+                                    @empty
+                                            <div class="col-md-8 col-md-offset-5">  
+                                                {!! link_to_action('GamesListController@addPlayer', trans('gamelist.join'), [$game->pk_id, Auth::user()->id], ['class' => 'btn btn-primary']) !!}
+                                            </div>                                          
+                                    @endforelse
+                                    
                                 </div>
                             @endforeach                 
                         </div>                       
