@@ -17,5 +17,4 @@ class Deck extends Model {
     protected $table = 'decks';
     protected $fillable = array('name');
     protected $primaryKey = 'pk_id';
-
 }

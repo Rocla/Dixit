@@ -30,7 +30,7 @@ Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@descr
 //Route::post('games', 'GamesListController@createGame');
 Route::get('play/{gameId}', ['uses'=>'BoardController@getBoard', 'as'=>'play']);
 Route::get('games/{gameId}/{playId}', 'GamesListController@addPlayer');
-//Route::get('games/{gameId}', 'GamesListController@delete');
+Route::get('games/{gameId}', 'GamesListController@delete');
 
 Route::controllers
 ([

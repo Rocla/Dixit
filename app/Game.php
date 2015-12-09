@@ -10,10 +10,10 @@ class Game extends Model
 	{
 		return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id');
 	}
-//        public function users()
-//        {
-//        return $this->belongsToMany('Dixit\User','players', 'pk_id', 'fk_games')->withPivot('pk_id');
-//        }  
+        public function users()
+        {
+            return $this->belongsToMany('Dixit\User', 'players', 'fk_games', 'fk_user_id')->withPivot('pk_id');
+        }  
 
 	public function turns()
 	{

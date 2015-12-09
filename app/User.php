@@ -41,10 +41,14 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'answer', 'remember_token'];
     
-//    public function games()
-//    {
-//        return $this->belongsToMany('Dixit\Game','players', 'id', 'fk_user_id')->withPivot('pk_id');
-//    }        
+    public function games()
+    {
+        return $this->belongsToMany('Dixit\Game', 'players', 'fk_user_id', 'fk_games')->withPivot('pk_id');
+    }  
+    public function players()
+    {
+	return $this->hasMany('Dixit\Player', 'fk_user_id', 'id');
+    }
             
     
 }
