@@ -13,13 +13,7 @@ class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-
     
-    public function players()
-    {
-            return $this->hasMany('Dixit\Player', 'fk_user_id', 'id');
-    }
-        
     /**
      * The database table used by the model.
      *
