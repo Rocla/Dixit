@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deck extends Model
 {
+        function __construct() {
+            parent::__construct();
+            $this->primaryKey = 'pk_id'; // because PHP don't override the field
+        }
+        
 	public function cards()
 	{
 		return $this->hasMany('Dixit\Card', 'fk_decks', 'pk_id');
@@ -17,7 +22,6 @@ class Deck extends Model
 	}
 
 	protected $table = 'decks';
-	protected $primarykey = 'pk_id';
 	protected $fillable = array('name');
 }
  

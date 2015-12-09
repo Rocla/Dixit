@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Turn extends Model
 {
+        function __construct() {
+            parent::__construct();
+            $this->primaryKey = 'pk_id'; // because PHP don't override the field
+        }
+        
 	public function game()
 	{
 		return $this->belongsTo('Dixit\Game', 'fk_games', 'pk_id');
@@ -22,6 +27,5 @@ class Turn extends Model
 	}
 
 	protected $table = 'turns';
-	protected $primarykey = 'pk_id';
-	protected $fillable = array('story');
+	protected $fillable = array('story', 'number', 'state');
 }

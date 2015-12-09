@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
+        function __construct() {
+            parent::__construct();
+            $this->primaryKey = 'pk_id'; // because PHP don't override the field
+        }
+        
 	public function players()
 	{
 		return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id');
@@ -22,6 +27,5 @@ class Game extends Model
 	}
 
 	protected $table = 'games';
-	protected $primarykey = 'pk_id';
-	protected $fillable = array('name', 'language', 'no_players' ,'started', 'turn_timeout');
+	protected $fillable = array('name', 'language', 'no_players' ,'started', 'turn_timeout', 'id_owner');
 }

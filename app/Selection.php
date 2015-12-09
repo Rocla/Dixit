@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Selection extends Model
 {
+        function __construct() {
+            parent::__construct();
+            $this->primaryKey = 'pk_selection'; // because PHP don't override the field
+        }
+        
 	public function player()
 	{
 		return $this->belongsTo('Dixit\Player', 'fk_players', 'pk_id');
@@ -28,5 +33,4 @@ class Selection extends Model
 
 
 	protected $table = 'selections';
-	protected $primarykey = 'pk_selection';
 }

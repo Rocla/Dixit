@@ -144,9 +144,7 @@ return [
         Dixit\Providers\AppServiceProvider::class,
         Dixit\Providers\AuthServiceProvider::class,
         Dixit\Providers\EventServiceProvider::class,
-        Dixit\Providers\RouteServiceProvider::class,
-        Dixit\Providers\BindingServiceProvider::class,
-        
+        Dixit\Providers\RouteServiceProvider::class,       
 
     ],
 

@@ -24,7 +24,9 @@ Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
-Route::get('play/{gameId}', 'BoardController@getBoard');
+Route::get('play/{gameId}', 'GameController@getCurrentTurn');
+Route::get('play/{gameId}/{playerId}', 'GameController@getHand');
+Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
 
 Route::controllers
 ([
