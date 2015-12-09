@@ -40,4 +40,11 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'answer', 'remember_token'];
+    
+//    public function games()
+//    {
+//        return $this->belongsToMany('Dixit\Game','players', 'id', 'fk_user_id')->withPivot('pk_id');
+//    }        
+            
+    
 }

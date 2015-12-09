@@ -21,10 +21,10 @@ class WelcomeController extends Controller {
 		$this->middleware('guest');
 	}
 
+        
 	public function getIndex()
 	{
-		//Debugbar::error("error");
-		return view('welcome')->with('cards', $this->cards->all());
+            return view('welcome')->with('cards', $this->cards->all());
 	}
 
 	public function postImageByID(Request $request)

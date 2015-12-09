@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-        function __construct() {
-            parent::__construct();
-            $this->primaryKey = 'pk_id'; // because PHP don't override the field
-        }
-        
 	public function players()
 	{
 		return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id');
 	}
+//        public function users()
+//        {
+//        return $this->belongsToMany('Dixit\User','players', 'pk_id', 'fk_games')->withPivot('pk_id');
+//        }  
 
 	public function turns()
 	{
@@ -25,7 +24,13 @@ class Game extends Model
 	{
 		return $this->belongsToMany('Dixit\Deck', 'games_based_on_decks', 'fk_games', 'fk_decks');
 	}
+        public function playersId()
+        {
+            return $this->hasMany('Dixit\Player', 'fk_games', 'pk_id')->select('fk_user_id');
+        }
 
 	protected $table = 'games';
+        protected $primaryKey = 'pk_id';
 	protected $fillable = array('name', 'language', 'no_players' ,'started', 'turn_timeout', 'id_owner');
+
 }

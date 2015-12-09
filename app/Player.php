@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
-        function __construct() {
-            parent::__construct();
-            $this->primaryKey = 'pk_id'; // because PHP don't override the field
-        }
         
 	public function game()
 	{
@@ -42,4 +38,5 @@ class Player extends Model
 	}
 
 	protected $table = 'players';
+        protected $primaryKey = 'pk_id';
 }

@@ -27,9 +27,14 @@ Route::post('addPlayer', 'GameListController@addPlayer');
 Route::get('play/{gameId}', 'GameController@getCurrentTurn');
 Route::get('play/{gameId}/{playerId}', 'GameController@getHand');
 Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
+//Route::post('games', 'GamesListController@createGame');
+Route::get('play/{gameId}', ['uses'=>'BoardController@getBoard', 'as'=>'play']);
+Route::get('games/{gameId}/{playId}', 'GamesListController@addPlayer');
+//Route::get('games/{gameId}', 'GamesListController@delete');
 
 Route::controllers
 ([
+    'board'	=>	'BoardController',
 	'readme'=>	'ReadMeController',
 	'rules'	=>	'RulesController',
 	'home'	=>	'HomeController',

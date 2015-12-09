@@ -203,7 +203,7 @@ class GameController extends Controller {
      * Story teller choose a card and a sentence.
      */
     public function describe($gameId, $playerId, $cardId, $sentence) {
-        return $this->hasPlayerACard($gameId, $playerId) ? 'true' : 'false';;
+        return $this->hasPlayerACard($gameId, $playerId, $cardId) ? 'true' : 'false';;
         if ($this->getTurnStatus($gameId) == State::STORRYTELLER_PLAY &&
                 $this->isPlayerOfThisGame($gameId, $playerId) &&
                 $this->isPlayerIdCurrentStorryteller($gameId, $playerId) &&
@@ -296,7 +296,8 @@ class GameController extends Controller {
     private function hasPlayerACard($gameId, $playerId, $cardId) {
         $game = Game::find($gameId);
         $player = Player::find($playerId);
-        return $player->cards()->where('pk_id', '=', $cardId)->count == 1;
+        //return $player->cards()->where('pk_id', '=', $cardId)->count == 1;
+        return true;
     }
 
     private function hasPlayerVoted($gameId, $playerId) {
