@@ -22,6 +22,6 @@ class Turn extends Model
 	}
 
 	protected $table = 'turns';
-	protected $primarykey = 'pk_id';
+	protected $primaryKey = 'pk_id';
 	protected $fillable = array('story');
 }

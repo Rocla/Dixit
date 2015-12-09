@@ -28,5 +28,5 @@ class Selection extends Model
 
 
 	protected $table = 'selections';
-	protected $primarykey = 'pk_selection';
+	protected $primaryKey = 'pk_selection';
 }
