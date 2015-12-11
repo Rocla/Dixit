@@ -9,3 +9,4 @@ nbproject/
 Homestead.yaml
 Homestead.json
 .env
+clean.sh
