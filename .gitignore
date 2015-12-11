@@ -2,3 +2,10 @@
 /nbproject
 /.env
 /composer.lock
+vendor/
+nbproject/
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
