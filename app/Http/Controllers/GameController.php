@@ -38,9 +38,8 @@ class GameController extends Controller {
 
     /**
      * Return the players status in an array.
-     * 1 mean the player is connected and not afk
-     * 0 mean the player is connected but afk
-     * -1 mean the player has been disconected
+     * 0 : The player has not played
+     * 1 : The player has played
      *
      * @return php array
      */
@@ -203,18 +202,20 @@ class GameController extends Controller {
      * Story teller choose a card and a sentence.
      */
     public function describe($gameId, $playerId, $cardId, $sentence) {
-        return $this->hasPlayerACard($gameId, $playerId, $cardId) ? 'true' : 'false';;
         if ($this->getTurnStatus($gameId) == State::STORRYTELLER_PLAY &&
                 $this->isPlayerOfThisGame($gameId, $playerId) &&
                 $this->isPlayerIdCurrentStorryteller($gameId, $playerId) &&
                 $this->hasPlayerACard($gameId, $playerId, $cardId)) {
+            
             $turn = $this->getCurrentTurn($gameId);
             $turn->story = $sentence;
 
             $selection = new Selection;
-            $selection->player()->associate($turn->storyteller());
+            $selection->player()->associate($turn->storyteller()->first());
             $selection->card()->associate(Card::find($cardId));
-
+            $selection->save();
+            return "toto";
+            
             $turn->selections()->attach($selection);
             $turn->state = State::PLAYERS_PLAY;
             $turn->update();
@@ -294,10 +295,8 @@ class GameController extends Controller {
     }
 
     private function hasPlayerACard($gameId, $playerId, $cardId) {
-        $game = Game::find($gameId);
         $player = Player::find($playerId);
-        //return $player->cards()->where('pk_id', '=', $cardId)->count == 1;
-        return true;
+        return count($player->cards()->where('pk_id', '=', $cardId)->first()) == 1;
     }
 
     private function hasPlayerVoted($gameId, $playerId) {

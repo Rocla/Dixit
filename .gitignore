@@ -1,4 +1,4 @@
 /vendor
 /nbproject
 /.env
-/.composer.lock
+/composer.lock
