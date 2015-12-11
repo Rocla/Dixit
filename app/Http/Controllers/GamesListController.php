@@ -7,6 +7,7 @@ use Dixit\Http\Requests;
 use Dixit\Game;
 use Dixit\Player;
 use Dixit\User;
+use Auth;
 use DebugBar;
 
 class GamesListController extends Controller
@@ -20,8 +21,16 @@ class GamesListController extends Controller
     }  
     
     public function getIndex()
-    {   
-        return view('gameslist')->with('games', $this->game->all());  
+    {  
+        $games=$this->game->all();
+        foreach ($games as $currentGame)
+        {
+            if($currentGame->users->contains(Auth::user()))
+            {
+                //return redirect()->route('play', [$currentGame->pk_id]);      
+            }
+        }
+        return view('gameslist')->with('games', $this->game->all()); 
     }
     
     public function createGame(Request $request)
@@ -32,11 +41,9 @@ class GamesListController extends Controller
     
     public function addPlayer($gameId, $playerId)
     {
-//      $user=User::find($playerId);
-//      $user->games()->attach($gameId);
-        Player::create(['fk_user_id'=>$playerId, 'fk_games'=>$gameId]);
-        return redirect()->route('play', [$gameId]);
-        
+        $user=User::find($playerId);
+        $user->games()->attach($gameId);        
+        return redirect()->route('play', [$gameId]);        
     }
     public function delete($gameId)
     {

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+/vendor
+/nbproject
+/.env
+/.composer.lock
+=======
 vendor/
 nbproject/
 /vendor
@@ -5,3 +11,4 @@ nbproject/
 Homestead.yaml
 Homestead.json
 .env
+>>>>>>> fac3c5b7c0f49745253d835d71c4683f54d9134c

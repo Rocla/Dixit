@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+        
 	public function game()
 	{
 		return $this->belongsTo('Dixit\Game', 'fk_games', 'pk_id');
+	}
+        
+	public function user()
+	{
+		return $this->belongsTo('Dixit\User', 'fk_user_id', 'id');
 	}
 
 	public function cards()
@@ -32,6 +38,5 @@ class Player extends Model
 	}
 
 	protected $table = 'players';
-	protected $primarykey = 'pk_id';
-	protected $fillable = ['fk_user_id', 'fk_games'];
+        protected $primaryKey = 'pk_id';
 }

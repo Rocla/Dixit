@@ -29,33 +29,33 @@
                             <input class="btn btn-primary pull-right" type="submit" value="{{ trans('gamelist.send') }}">
                         </form>                                                      
                     </div>    
-                    @if($games->isEmpty())  
-                    <label class="col-md-4 control-label">No game available. Create a new one.</label>no game
+                    @if($games->isEmpty()) 
+                    <div class="col-md-4">
+                        <p>No game available. Create a new one.</p>
+                    </div>
                     @else
                         <div class="panel-heading">List of games:</div>                           
-                            @foreach($games as $game)                             
-                                    <div class="panel-body">
-                                    <div class="col-md-8 col-md-offset-5"> <strong>Game: {{$game->name}}</strong> </div>
-                                    <div class="col-md-8 col-md-offset-2">Language: {{$game->language }},    
-                                        <strong> {{($game->no_players)}} </strong> players required, 
-                                        We still need <strong>  {{($game->no_players)-($game->players->count())}} </strong> to start the game
-                                    </div> 
-                                    
-                                    @forelse($game->playersId as $userId)
-                                        @if ($userId->fk_user_id == Auth::user()->id)
-                                            <label class="col-md-7 col-md-offset-5">Game in progress</label>
-                                        @endif 
-                                    @empty
-                                            <div class="col-md-8 col-md-offset-5">  
-                                                {!! link_to_action('GamesListController@addPlayer', trans('gamelist.join'), [$game->pk_id, Auth::user()->id], ['class' => 'btn btn-primary']) !!}
-                                            </div>                                          
-                                    @endforelse
-                                    
+                            @foreach($games as $game)  
+                                <div class="panel-body">
+                                <div class="col-md-8 col-md-offset-5"> <strong>Game: {{$game->name}}</strong> </div>
+                                <div class="col-md-8 col-md-offset-4">Language: {{$game->language }},    
+                                    <strong> {{($game->no_players)}} </strong> players required.
+                                </div> 
+                                <div class="col-md-8 col-md-offset-4">
+                                    <strong>We still need {{($game->no_players)-($game->players->count())}}  to start the game</strong>
+                                </div>
+                                @if($game->users->contains(Auth::user()))                                        
+                                    <div class="col-md-8 col-md-offset-9">
+                                        {!!link_to_route('play', 'Game in progress', [$game->pk_id], ['class' => 'btn btn-primary']) !!}
+                                    </div>
+                                @else
+                                    <div class="col-md-8 col-md-offset-10">  
+                                        {!! link_to_action('GamesListController@addPlayer', trans('gamelist.join'), [$game->pk_id, Auth::user()->id], ['class' => 'btn btn-primary']) !!}
+                                    </div>  
+                                @endif                                     
                                 </div>
                             @endforeach                 
-                        </div>                       
-
-
+                        </div> 
                     @endif                   
                
             </div>
@@ -65,7 +65,8 @@
     $(document).ready(function(){
         $("#newGame").click(function(){
             $("#div_newGame").toggle();
-        });
+        });    
+       
     });
 </script>
 @endsection
