@@ -25,6 +25,7 @@ Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
 Route::get('play/trial', 'GameController@trial');
+Route::get('board/{board_id}', 'BoardController@getBoard');
 
 /*To test the game controler*/
 
