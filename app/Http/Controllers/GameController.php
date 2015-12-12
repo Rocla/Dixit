@@ -62,9 +62,10 @@ class GameController extends Controller {
      * @return integer value
      */
     public function getTurnStatus($gameId) {
-        $result = $this->getCurrentTurn($gameId)->state;
-        if ($result)
-            return $result;
+        $result = $this->getCurrentTurn($gameId);
+        
+        if ($result != "")
+            return $result->state;
         else
             return "the game have no turn yet";
     }
@@ -72,7 +73,7 @@ class GameController extends Controller {
     /**
      * Return the number of the current turn as integer value.
      *
-     * @return integer value
+     * @return integer value (0 meen the game have no turn) 
      */
     public function getTurnNumber($gameId) {
         $game = Game::find($gameId);
@@ -394,7 +395,7 @@ class GameController extends Controller {
     }
 
     public function trial() {
-        
+        return $this->getTurnStatus(1);
     }
 
 }
