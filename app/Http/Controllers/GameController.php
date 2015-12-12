@@ -297,7 +297,7 @@ class GameController extends Controller {
                     $this->getTurnStatus($gameId) == State::FINISHED) {
                 $turn = new Turn;
                 $turn->story = "";
-                $turn->number = 1;
+                $turn->number = $this->getTurnNumber($gameId)+1;
                 $turn->state = State::STORRYTELLER_PLAY;
                 $turn->game()->associate($game);
                 $turn->storyteller()->associate($this->getCurrentPlayer($gameId));
@@ -311,7 +311,6 @@ class GameController extends Controller {
     }
 
     /* ================================================================== */
-
     //      PRIVATE
     /* ================================================================== */
 

@@ -31,7 +31,7 @@ Route::get('play/trial', 'GameController@trial');
 //0 start a game
 //Route::get('play/{gameId}', 'GameController@startGame');
 //1 start a turn
-//Route::get('play/{gameId}', 'GameController@startNewTurn');
+Route::get('play/{gameId}', 'GameController@startNewTurn');
 //2 describe a card by storyteller
 //Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
 //3 all player choose a card
