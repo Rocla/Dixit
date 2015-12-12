@@ -97,9 +97,11 @@
                     <div id="bottom_game_actions">
                         Actions:
                         <div class="well" float="left">
-                            Timer: <p id="timer_turn"></p>
+                            <div id="timer">
+                                Timer: <p id="timer_turn"></p>
+                            </div>
                             <div id="storyteller_menu">
-                                You are the Storyteller:
+                                You are the Storyteller, sescribe your card:<br/>
                                 <textarea id="story"></textarea><br/>
                                 <button type='button' id="create_new_turn" class="btn btn-primary" disabled>Start new turn</button>
                             </div>
@@ -120,10 +122,11 @@ var player_number = 1;
 var player_cards_number = 6;
 var players = [1,2,3,4];
 var player_owner = 2;
-var player_storyteller = 2;
+var player_storyteller = 1;
 var player_played = [];
 var game_status = "Unknown";
-var game_started = false;
+var game_started = true;
+var timer = 0;
 
 
 // Retrived data from live server
@@ -167,10 +170,27 @@ $(document).ready(function(){
     {
         $("#storyteller_menu").hide();
     }
+    else
+    {
+        $("#validate_card").hide();
+    }
 
     if(player_number != player_owner)
     {
         $("#administration_panel").hide();
+    }
+
+    if(game_started)
+    {
+        for(var i=players.length+2; i<=12; i++)
+        {
+            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/offline_red.png')}}");
+        }
+    }
+
+    if(timer == 0)
+    {
+        $("#timer").hide();
     }
 
 });
@@ -201,6 +221,8 @@ function drop(ev) {
     }
 
     document.getElementById(play_spot).src = data_url;
+
+    $("#validate_card").removeAttr('disabled');
 
 }
   
