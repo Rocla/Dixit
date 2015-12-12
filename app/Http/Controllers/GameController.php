@@ -30,22 +30,6 @@ class GameController extends Controller {
     }
 
     /**
-     * Return the players status in an array.
-     * 0 : The player has not played
-     * 1 : The player has played
-     *
-     * @return php array
-     */
-    public function getPlayersStatus($gameId) {
-        //TODO recupérer le tableau des joueurs de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une méthode calculant leur status
-        //TODO extraire leur status dans un tableau et le retourner
-
-        return getStatus(1);
-    }
-
-    /**
      * Return the players scores in an array.
      *
      * @return php array
@@ -130,15 +114,6 @@ class GameController extends Controller {
         $cards = $player->cards()->getResults();
 
         return $cards;
-    }
-
-    /**
-     * Return if a player has vote.
-     *
-     * @return true if voted, false othervise
-     */
-    public function getVotedStatus($gameId, $playerId) {
-        return $this->hasPlayerVoted($gameId, $playerId);
     }
 
     /**
@@ -301,6 +276,23 @@ class GameController extends Controller {
         }
     }
 
+    public function hasPlayerVoted($gameId, $playerId) {
+        $turn = $this->getCurrentTurn($gameId);
+
+        $selectionsId = $turn->selections()->select('pk_id')->getResults();
+
+        foreach($selectionsId as $id) {
+            $selection = Selection::find($id['pk_id']);
+            if($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
+                return true;
+        }
+    }
+
+    public function hasPlayerAlreadyPlay($gameId, $playerId) {
+        return $this->getCurrentTurn($gameId)->selections()->
+                        where('fk_players', '=', $playerId)->count() > 0;
+    }
+    
     /* ================================================================== */
     //      PRIVATE
     /* ================================================================== */
@@ -353,18 +345,6 @@ class GameController extends Controller {
         return count($player->cards()->where('pk_id', '=', $cardId)->first()) == 1;
     }
 
-    private function hasPlayerVoted($gameId, $playerId) {
-        $turn = $this->getCurrentTurn($gameId);
-
-        $selectionsId = $turn->selections()->select('pk_id')->getResults();
-
-        foreach($selectionsId as $id) {
-            $selection = Selection::find($id['pk_id']);
-            if($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
-                return true;
-        }
-    }
-    
     private function getVoteCount($gameId) {
         $turn = $this->getCurrentTurn($gameId);
 
@@ -382,11 +362,6 @@ class GameController extends Controller {
     private function isCardOnBoard($gameId, $cardId) {
         return $this->getCurrentTurn($gameId)->selections()->
                         where('fk_cards', '=', $cardId)->count() > 0;
-    }
-
-    private function hasPlayerAlreadyPlay($gameId, $playerId) {
-        return $this->getCurrentTurn($gameId)->selections()->
-                        where('fk_players', '=', $playerId)->count() > 0;
     }
 
     private function isCardAlreadyPlayed($gameId, $cardId) {

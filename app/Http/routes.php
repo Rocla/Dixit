@@ -27,18 +27,38 @@ Route::post('addPlayer', 'GameListController@addPlayer');
 Route::get('play/trial', 'GameController@trial');
 Route::get('board/{board_id}', 'BoardController@getBoard');
 
-/*To test the game controler*/
+/*
+ * GAME ACTIONS
+ */
 
-//0 start a game
-//Route::get('play/{gameId}', 'GameController@startGame');
-//1 start a turn
-Route::get('play/{gameId}', 'GameController@startNewTurn');
-//2 describe a card by storyteller
-//Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
-//3 all player choose a card
-//Route::get('play/{gameId}/{playerId}/{cardId}', 'GameController@select');
-//4 all player vote for a card
-//Route::get('play/{gameId}/{playerId}/{cardId}', 'GameController@vote');
+// Start the game
+Route::get('play/action/start/{gameId}', 'GameController@startGame');
+// Create a new turn
+Route::get('play/action/new/turn/{gameId}', 'GameController@startNewTurn');
+// Describe a story
+Route::get('play/action/tell/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
+// Choose a card
+Route::get('play/action/choose/card/{gameId}/{playerId}/{cardId}', 'GameController@select');
+// Vote for a card
+Route::get('play/action/vote/{gameId}/{playerId}/{cardId}', 'GameController@vote');
+
+/*
+ * GAME DATA
+ */
+
+// get the player ID from a user ID
+Route::get('play/data/player/{userId}', 'GamesListController@getPlayerId');
+// get the game ID from a user ID
+Route::get('play/data/game/{userId}', 'GamesListController@getGameId');
+// get the list of players from game ID
+Route::get('play/data/players/{gameId}', 'GameController@getPlayersId');
+// has player already voted
+Route::get('play/data/player/voted/status/{gameId}/{playerId}', 'GameController@hasPlayerVoted');
+// has player already play a card
+Route::get('play/data/player/played/status/{gameId}/{playerId}', 'GameController@hasPlayerAlreadyPlay');
+
+
+
 
 
 Route::controllers
