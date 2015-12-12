@@ -49,10 +49,12 @@ class GameController extends Controller {
      * @return php array
      */
     public function getBoard($gameId) {
-        //TODO recupérer le tableau des  de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une methode de calcule de score
-        //TODO extraire leur score dans un tableau et le retourner
+        if ($this->getTurnStatus($gameId) == State::PLAYERS_VOTE) {
+            $turn = $this->getCurrentTurn($gameId);
+            return $turn->selections()->select('fk_cards')->getResults();
+        } else {
+            return "you can not get the board now";
+        }
     }
 
     /**
@@ -143,9 +145,9 @@ class GameController extends Controller {
             $selection->votes()->attach($playerId);
             $selection->update();
         }
-        
+
         $game = Game::find($gameId);
-        
+
         if ($this->getVoteCount($gameId) == $game->players()->count() - 1) {
             $this->calculateScore($gameId);
         }
@@ -263,7 +265,7 @@ class GameController extends Controller {
                     $this->getTurnStatus($gameId) == State::FINISHED) {
                 $turn = new Turn;
                 $turn->story = "";
-                $turn->number = $this->getTurnNumber($gameId)+1;
+                $turn->number = $this->getTurnNumber($gameId) + 1;
                 $turn->state = State::STORRYTELLER_PLAY;
                 $turn->game()->associate($game);
                 $turn->storyteller()->associate($this->getCurrentPlayer($gameId));
@@ -281,9 +283,9 @@ class GameController extends Controller {
 
         $selectionsId = $turn->selections()->select('pk_id')->getResults();
 
-        foreach($selectionsId as $id) {
+        foreach ($selectionsId as $id) {
             $selection = Selection::find($id['pk_id']);
-            if($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
+            if ($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
                 return true;
         }
     }
@@ -292,15 +294,11 @@ class GameController extends Controller {
         return $this->getCurrentTurn($gameId)->selections()->
                         where('fk_players', '=', $playerId)->count() > 0;
     }
-    
-    /* ================================================================== */
-    //      PRIVATE
+
     /* ================================================================== */
 
-    private function getStatus($player) {
-        //TODO faire le calcule du status
-        return 1;
-    }
+    //      PRIVATE
+    /* ================================================================== */
 
     private function getScore($player) {
         //TODO recuperer les tours de jeux
@@ -351,11 +349,11 @@ class GameController extends Controller {
         $selectionsId = $turn->selections()->select('pk_id')->getResults();
 
         $total = 0;
-        foreach($selectionsId as $id) {
+        foreach ($selectionsId as $id) {
             $selection = Selection::find($id['pk_id']);
             $total += $selection->votes()->count();
         }
-        
+
         return $total;
     }
 
@@ -400,7 +398,7 @@ class GameController extends Controller {
     }
 
     public function trial() {
-        $this->getPlayers(4);
+        return $this->getBoard(4);
     }
 
 }

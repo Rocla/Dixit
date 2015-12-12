@@ -24,13 +24,14 @@ Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
-Route::get('play/trial', 'GameController@trial');
 Route::get('board/{board_id}', 'BoardController@getBoard');
 
 /*
  * GAME ACTIONS
  */
 
+// Start the game
+Route::get('play/action/create/{gameId}', 'GameController@startGame');
 // Start the game
 Route::get('play/action/start/{gameId}', 'GameController@startGame');
 // Create a new turn
@@ -56,7 +57,16 @@ Route::get('play/data/players/{gameId}', 'GameController@getPlayersId');
 Route::get('play/data/player/voted/status/{gameId}/{playerId}', 'GameController@hasPlayerVoted');
 // has player already play a card
 Route::get('play/data/player/played/status/{gameId}/{playerId}', 'GameController@hasPlayerAlreadyPlay');
-
+// get the story teller id
+Route::get('play/data/story/teller/{gameId}', 'GameController@getStoryTeller');
+// get the sentence of the turn
+Route::get('play/data/story/{gameId}', 'GameController@getCurrentSentence');
+// get the turn number
+Route::get('play/data/turn/number/{gameId}', 'GameController@getTurnNumber');
+// get the turn status @see State in GameController on the botom
+Route::get('play/data/turn/status/{gameId}', 'GameController@getTurnStatus');
+// get the cards played on the board
+Route::get('play/data/turn/board/{gameId}', 'GameController@getBoard');
 
 
 
