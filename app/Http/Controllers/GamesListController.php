@@ -44,13 +44,13 @@ class GamesListController extends Controller {
         //to do 
     }
     
-    public function getPlayer($userId) {
+    public function getPlayerId($userId) {
         $user = User::find($userId);
         
         return $user->players()->select('pk_id')->first()['pk_id'];
     }
     
-    public function getGame($userId) {
+    public function getGameId($userId) {
         $playerId = $this->getPlayer($userId);
         return Player::find($playerId)->game()->select('pk_id')->first()['pk_id'];
     }
