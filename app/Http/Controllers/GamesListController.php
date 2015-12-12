@@ -30,7 +30,10 @@ class GamesListController extends Controller {
     }
 
     public function createGame(Request $request) {
-        Game::create(array_merge($request->all(), ['id_owner' => $request->user()->id, 'started' => 0, 'turn_timeout' => 3]));
+        $game = Game::create(array_merge($request->all(), ['id_owner' => $request->user()->id, 'started' => 0, 'turn_timeout' => 3]));
+        
+        $game->decks()->attach(1);
+        
         return redirect('play');
     }
 
