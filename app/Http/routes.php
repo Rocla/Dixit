@@ -67,6 +67,8 @@ Route::get('play/data/turn/number/{gameId}', 'GameController@getTurnNumber');
 Route::get('play/data/turn/status/{gameId}', 'GameController@getTurnStatus');
 // get the cards played on the board
 Route::get('play/data/turn/board/{gameId}', 'GameController@getBoard');
+// get the player score
+Route::get('play/data/player/score/{gameId}/{playerId}', 'GameController@getScore');
 
 
 

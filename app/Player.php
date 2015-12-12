@@ -40,4 +40,6 @@ class Player extends Model
 
 	protected $table = 'players';
         protected $primaryKey = 'pk_id';
+        protected $fillable = array('score');
+
 }

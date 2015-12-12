@@ -30,20 +30,6 @@ class GameController extends Controller {
     }
 
     /**
-     * Return the players scores in an array.
-     *
-     * @return php array
-     */
-    public function getPlayersScore($gameId) {
-        //TODO recupérer le tableau des joueurs de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une methode de calcule de score
-        //TODO extraire leur score dans un tableau et le retourner
-
-        return getScore(1);
-    }
-
-    /**
      * Return the curent cards displayed on the board as a array.
      *
      * @return php array
@@ -294,18 +280,16 @@ class GameController extends Controller {
         return $this->getCurrentTurn($gameId)->selections()->
                         where('fk_players', '=', $playerId)->count() > 0;
     }
+    
+    public function getScore($gameId, $playerId) {  
+        return Player::find($playerId)->score;
+    }
 
     /* ================================================================== */
 
     //      PRIVATE
     /* ================================================================== */
 
-    private function getScore($player) {
-        //TODO recuperer les tours de jeux
-        //TODO pour chaque tours calculer le score du joueur
-        //TODO sommer ce score et le retourner        
-        return 1000;
-    }
 
     private function getCurrentTurn($gameId) {
         $game = Game::find($gameId);
