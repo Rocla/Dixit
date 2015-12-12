@@ -21,10 +21,12 @@
                 <div class="panel-heading">{{ trans('board.heading') }} Test</div>
 
                 <div class="panel-body">
+                    <div id="administration_panel">
                     Administration panel:
-                     <div class="well" float="left">
-                        <button type='button' id="edit_game" class="btn btn-primary">Edit</button>
-                        <button type='button' id="start_game" class="btn btn-primary" disabled>Start</button>
+                         <div class="well" float="left">
+                            <button type='button' id="edit_game" class="btn btn-primary">Edit</button>
+                            <button type='button' id="start_game" class="btn btn-primary" disabled>Start</button>
+                        </div>
                     </div>
                      Game Status:
                     <div class="well" float="left">
@@ -96,11 +98,12 @@
                         Actions:
                         <div class="well" float="left">
                             Timer: <p id="timer_turn"></p>
-                            You are the Storyteller:
+                            <div id="storyteller_menu">
+                                You are the Storyteller:
                                 <textarea id="story"></textarea><br/>
-                                <button type='button' id="create_new_turn" class="btn btn-primary" disabled>Validate new turn</button>
-                                <button type='button' id="validate_card" class="btn btn-primary" disabled>Validate card</button>
-                                <button type='button' id="reset_hand" class="btn btn-primary">Reset hand</button>
+                                <button type='button' id="create_new_turn" class="btn btn-primary" disabled>Start new turn</button>
+                            </div>
+                                <button type='button' id="validate_card" class="btn btn-primary" disabled>Validate turn</button>
                         </div>
                     </div>
                 </div>
@@ -113,21 +116,26 @@
 <script type="text/javascript"> 
 
 // Retrived data from controller at loading
-var player_spot_number = 5;
+var player_number = 1;
 var player_cards_number = 6;
-var validated_players = [];
-var players_playing = [];
-var player_owner = 1;
-var player_storyteller = 1;
+var players = [1,2,3,4];
+var player_owner = 2;
+var player_storyteller = 2;
+var player_played = [];
+var game_status = "Unknown";
+var game_started = false;
 
 
 // Retrived data from live server
-var game_status = "";
-var game_started = false;
-var player_played = [];
+// listen on game_status
+// listen on game_started
+// listen on player_played
+// listen on player_storyteller
 
 // Computated data
-var play_spot = "spot_card_" + player_spot_number;
+var play_spot = "spot_card_" + player_number;
+var index = players.indexOf(player_number);
+players.splice(index, 1);
 
 
 // On page load
@@ -138,15 +146,33 @@ $(document).ready(function(){
         resize_height_cards();
     });
 
+    $("#game_status").text(game_status);
+
     $("#"+play_spot).attr('src', "{{asset('/images/cards/drag_card_here.png')}}");
     $("#"+play_spot).attr('ondrop', 'drop(event)');
     $("#"+play_spot).attr('ondragover', 'allowDrop(event)');
 
-    if(player_spot_number > 6)
+    if(player_number > 6)
     {
         document.getElementById('top_game_hand').appendChild(document.getElementById('bottom_game_hand'));
         document.getElementById('top_game_actions').appendChild(document.getElementById('bottom_game_actions'));
     }
+
+    for(var player in players)
+    {
+        $("#spot_card_"+players[player]).attr('src', "{{asset('/images/default_avatar/online_green.png')}}");
+    }
+
+    if(player_storyteller != player_number)
+    {
+        $("#storyteller_menu").hide();
+    }
+
+    if(player_number != player_owner)
+    {
+        $("#administration_panel").hide();
+    }
+
 });
 
 // Drag and drop for player
