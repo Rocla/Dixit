@@ -18,24 +18,15 @@ class GameController extends Controller {
     /* ================================================================== */
 
     /**
-     * Return the players pseudo in an array.
-     * 
-     * The key is the player id 
-     * The value is the name 
+     * Return the players id in an array.
      *
      * @return php array
      */
-    public function getPlayers($gameId) {
+    public function getPlayersId($gameId) {
         $game = Game::find($gameId);
         $player = $game->players()->orderBy('pk_id', 'desc')->select('pk_id')->getResults();
 
-        $pseudo = array();
-        foreach ($player as $p) {
-            $user = Player::find($p['pk_id'])->user()->select('username')->getResults();
-            array_push($pseudo, array($p['pk_id'] => $user['username']));
-        }
-
-        return $pseudo;
+        return $player;
     }
 
     /**
@@ -434,7 +425,7 @@ class GameController extends Controller {
     }
 
     public function trial() {
-        
+        $this->getPlayers(4);
     }
 
 }
