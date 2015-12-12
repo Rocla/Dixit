@@ -67,7 +67,7 @@ class GameController extends Controller {
         if ($result != "")
             return $result->state;
         else
-            return "the game have no turn yet";
+            return "The game has not been started by the owner yet.";
     }
 
     /**

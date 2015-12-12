@@ -67,6 +67,9 @@ Route::get('play/data/game/status/{gameId}', 'GameController@getGameStarted');
 Route::get('play/data/player/score/{gameId}/{playerId}', 'GameController@getScore');
 // Get the player hands
 Route::get('play/data/player/hand/{gameId}/{playerId}', 'GameController@getHand');
+// Get image name by id
+Route::get('play/data/cards/name/{cardId}', 'HomeController@getImageByID');
+
 
 /*
  * DEBUG
