@@ -65,7 +65,13 @@ Route::get('play/data/turn/board/{gameId}', 'GameController@getBoard');
 Route::get('play/data/game/status/{gameId}', 'GameController@getGameStarted');
 // get the player score
 Route::get('play/data/player/score/{gameId}/{playerId}', 'GameController@getScore');
+// Get the player hands
+Route::get('play/data/player/hand/{gameId}/{playerId}', 'GameController@getHand');
 
+/*
+ * DEBUG
+ */
+Route::get('play/trial', 'GameController@trial');
 
 
 

@@ -34,7 +34,7 @@ class GameController extends Controller {
      */
     public function getGameStarted($gameId) {
         $game = Game::find($gameId);
-        return $game->started;
+        return $game->started ? true : false;
     }
 
     /**
@@ -107,7 +107,7 @@ class GameController extends Controller {
         $game = Game::find($gameId);
 
         $player = Player::find($playerId);
-        $cards = $player->cards()->getResults();
+        $cards = $player->cards()->select('name')->getResults();
 
         return $cards;
     }
@@ -390,7 +390,6 @@ class GameController extends Controller {
     }
 
     public function trial() {
-        return $this->getBoard(4);
     }
 
 }
