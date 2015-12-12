@@ -28,13 +28,13 @@ class GameController extends Controller {
 
         return $player;
     }
-    
+
     /**
      * Return the if the game is started or not.
      */
     public function getGameStarted($gameId) {
         $game = Game::find($gameId);
-        return $game->started ? true : false;
+        return $game->started;
     }
 
     /**
@@ -62,7 +62,11 @@ class GameController extends Controller {
      * @return integer value
      */
     public function getTurnStatus($gameId) {
-        return $this->getCurrentTurn($gameId)->state;
+        $result = $this->getCurrentTurn($gameId)->state;
+        if ($result)
+            return $result;
+        else
+            return "the game have no turn yet";
     }
 
     /**
@@ -288,8 +292,8 @@ class GameController extends Controller {
         return $this->getCurrentTurn($gameId)->selections()->
                         where('fk_players', '=', $playerId)->count() > 0;
     }
-    
-    public function getScore($gameId, $playerId) {  
+
+    public function getScore($gameId, $playerId) {
         return Player::find($playerId)->score;
     }
 
@@ -390,6 +394,7 @@ class GameController extends Controller {
     }
 
     public function trial() {
+        
     }
 
 }
