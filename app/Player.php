@@ -19,7 +19,7 @@ class Player extends Model
 
 	public function cards()
 	{
-		return $this->belongsToMany('Dixit\Card', 'hands', 'fk_cards', 'fk_players' );
+		return $this->belongsToMany('Dixit\Card', 'hands', 'fk_players', 'fk_cards' );
 	}
 
 	public function turns()
@@ -27,14 +27,15 @@ class Player extends Model
 		return $this->hasMany('Dixit\Turn', 'fk_story_teller', 'pk_id');
 	}
 
-	public function vote()
+	public function votes()
 	{
-		return $this->belongsToMany('Dixit\Selection', 'fk_players');
+		return $this->belongsToMany('Dixit\Selection', 'selection_is_voted_players',
+                        'fk_players', 'fk_selections');
 	}
 
 	public function selections()
 	{
-		return $this->belongsToMany('Dixit\Selection', 'selection_is_voted_players', 'fk_players', 'pk_selection_voted');
+		return $this->hasMany('Dixit\Selection', 'fk_players', 'pk_id');
 	}
 
 	protected $table = 'players';
