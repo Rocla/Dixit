@@ -28,6 +28,14 @@ class GameController extends Controller {
 
         return $player;
     }
+    
+    /**
+     * Return the if the game is started or not.
+     */
+    public function getGameStarted($gameId) {
+        $game = Game::find($gameId);
+        return $game->started;
+    }
 
     /**
      * Return the curent cards displayed on the board as a array.

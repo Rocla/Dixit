@@ -10,21 +10,15 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-//Route::get('test','WelcomeController@getName');
-// Route::get('home','HomeController@getIndex');
-//Route::get('auth','Auth\AuthController@getIndex');
-//Route::get('user','UserController@getIndex');
-// Route::get('/','WelcomeController@getIndex');
-
-//Route::get('/', ['uses'=>'HomeController@getIndex', 'as'=>'home'] );
+/*
+ * NAVIGATION
+ */
 
 Route::post('cards/imageByID', 'WelcomeController@postImageByID');
 Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
-Route::post('play', 'GamesListController@createGame');
-Route::post('addPlayer', 'GameListController@addPlayer');
-Route::get('board/{board_id}', 'BoardController@getBoard');
+Route::post('play', 'GamesListController@getIndex');
+Route::get('board/{board_id}', 'BoardController@getBoard');;
 
 /*
  * GAME ACTIONS
@@ -67,6 +61,8 @@ Route::get('play/data/turn/number/{gameId}', 'GameController@getTurnNumber');
 Route::get('play/data/turn/status/{gameId}', 'GameController@getTurnStatus');
 // get the cards played on the board
 Route::get('play/data/turn/board/{gameId}', 'GameController@getBoard');
+// get the game status (started or not)
+Route::get('play/data/game/status/{gameId}', 'GameController@getGameStarted');
 // get the player score
 Route::get('play/data/player/score/{gameId}/{playerId}', 'GameController@getScore');
 
