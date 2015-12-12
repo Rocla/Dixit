@@ -24,13 +24,21 @@ Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@createGame');
 Route::post('addPlayer', 'GameListController@addPlayer');
-Route::get('play/{gameId}', 'GameController@getCurrentTurn');
-Route::get('play/{gameId}/{playerId}', 'GameController@getHand');
-Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
-//Route::post('games', 'GamesListController@createGame');
-Route::get('play/{gameId}', ['uses'=>'BoardController@getBoard', 'as'=>'play']);
-Route::get('games/{gameId}/{playId}', 'GamesListController@addPlayer');
-Route::get('games/{gameId}', 'GamesListController@delete');
+Route::get('play/trial', 'GameController@trial');
+
+/*To test the game controler*/
+
+//0 start a game
+//Route::get('play/{gameId}', 'GameController@startGame');
+//1 start a turn
+//Route::get('play/{gameId}', 'GameController@startNewTurn');
+//2 describe a card by storyteller
+//Route::get('play/{gameId}/{playerId}/{cardId}/{sentence}', 'GameController@describe');
+//3 all player choose a card
+//Route::get('play/{gameId}/{playerId}/{cardId}', 'GameController@select');
+//4 all player vote for a card
+//Route::get('play/{gameId}/{playerId}/{cardId}', 'GameController@vote');
+
 
 Route::controllers
 ([
