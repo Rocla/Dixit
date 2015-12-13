@@ -25,7 +25,7 @@ Route::get('board/{board_id}', 'BoardController@getBoard');;
  */
 
 // Create the game LE CONTROLER EST FAUX ?
-//Route::get('play/action/create/{gameId}', 'GameController@startGame');
+Route::get('play/action/create/{gameId}', 'GameController@startGame');
 // Start the game
 Route::get('play/action/start/{gameId}', 'GameController@startGame');
 // Create a new turn

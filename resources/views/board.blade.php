@@ -184,6 +184,7 @@ function second_level_ajax()
             }),
         $.get( "/play/data/game/status/"+game_id, function(data) {
             game_created = (parseInt(data)==1);
+            console.log()
             })
     ).then(third_level_ajax);
 }
@@ -218,6 +219,9 @@ function third_level_ajax()
         $.when(
             $.get( "/play/data/story/"+game_id, function(data) {
                 turn_story = data;
+                }),
+            $.get( "/play/data/story/teller/"+game_id, function(data) {
+                player_storyteller = parseInt(data);
                 })
         ).then(game_created_level_ajax());
     }
@@ -292,7 +296,7 @@ function load_board()
     //console.log(cards_played)
 
     // Settup the game board
-    $("#title_name").text("{{ trans('board.heading') }} "+turn_number+" as player: "+(player_number+1));
+    $("#title_name").text("{{ trans('board.heading') }} "+game_id+" as player: "+(player_number+1));
     $("#turn_number").text("Turn Number: "+turn_number);
     $("#turn_story").text("Turn Story: "+turn_story);
 
@@ -323,7 +327,7 @@ function load_board()
         }
     }
 
-    if(storyteller_wait || game_voting)
+    if(storyteller_wait || game_voting || game_playing)
     {
         storyteller_number = players.indexOf(player_storyteller);
         var storyteller_spot = "spot_card_" + (storyteller_number+1); 
@@ -331,9 +335,23 @@ function load_board()
     }
     if(game_playing)
     {
-        $("#"+play_spot).attr('src', "{{asset('/images/cards/drag_card_here.png')}}");
-        $("#"+play_spot).attr('ondrop', 'drop(event)');
-        $("#"+play_spot).attr('ondragover', 'allowDrop(event)');
+
+        if(parseInt(storyteller_number) == parseInt(player_number))
+        {
+            $("#"+play_spot).attr('src', "{{asset('/images/default_avatar/self.png')}}");
+            $("#game_status").text("You are waiting for players to play a card based on your story.");
+            $("#top_game_hand").hide();
+            $("#bottom_game_hand").hide();
+            $("#top_game_actions").hide();
+            $("#bottom_game_actions").hide();
+        }
+        else
+        {
+            $("#"+play_spot).attr('src', "{{asset('/images/cards/drag_card_here.png')}}");
+            $("#"+play_spot).attr('ondrop', 'drop(event)');
+            $("#"+play_spot).attr('ondragover', 'allowDrop(event)');
+        }
+        
 
     }
     else if(game_created)
@@ -356,7 +374,6 @@ function load_board()
         $("#top_game_actions").hide();
         $("#bottom_game_actions").hide();
         $("#turn_story").hide();
-        // $("#start_turn").removeAttr('disabled');
     }
     
     else
@@ -371,11 +388,6 @@ function load_board()
 
     if(game_voting)
     {        
-        // for(var i=0; i<players.length;i++)
-        // {
-        //     $("#spot_card_"+(i+1)).attr('src', "{{asset('/images/cards/official')}}"+"/"+cards_played[i]);
-        // }
-
         var game_board_div = document.getElementById("game_board_main");
         game_board_div.setAttribute('style',"position: relative; left: 0; top: 0;");
 
@@ -388,6 +400,7 @@ function load_board()
 
         for (card in cards_played)
         {
+            //console.log(cards_played);
             var vote_card = document.createElement('img');
             var vote_card_id = 'vote_card_'+(parseInt(card)+1);
             vote_card.setAttribute('id',vote_card_id);
@@ -500,8 +513,13 @@ $(document).ready(function(){
         source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
         var card_position = player_hand.indexOf(source);
         console.log(player_hand_numbers[card_position])
-        $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position]+"/"+$("#story").val(), function(data) {
-            location.reload();
+        $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
+            $("#top_game_hand").hide();
+            $("#bottom_game_hand").hide();
+            $("#validate_card").hide();
+            $("#validate_vote").hide();
+            $("#bottom_game_actions").hide();
+            $("#game_status").text("We are waiting on the other players to play a card.");
         })
     });
 
@@ -510,7 +528,7 @@ $(document).ready(function(){
         source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
         var card_position = player_hand.indexOf(source);
         $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {
-            $("#validate_vote").hide();
+            $("#validate_card").hide();
             $("#validate_vote").hide();
             $("#bottom_game_actions").hide();
             $("#game_status").text("We are waiting on the other players to vote.");
