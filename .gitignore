@@ -1,10 +1,12 @@
-<<<<<<< HEAD
 /vendor
 /nbproject
 /.env
-/.composer.lock
-=======
+/composer.lock
 vendor/
 nbproject/
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
 .env
->>>>>>> fac3c5b7c0f49745253d835d71c4683f54d9134c
+clean.sh

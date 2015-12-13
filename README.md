@@ -21,6 +21,25 @@
 
 ## Setup the project
 
+### Setup to test:
+ > git clone https://github.com/Rocla/Dixit.git<br>
+ > cd Dixit<br>
+ > composer install
+ - Set the .env file
+ > sudo chmod -R o+w storage<br>
+ > composer dump-autoload<br>
+ > composer update --no-scripts<br> 
+ > composer update<br> 
+ > php artisan vendor:publish<br>
+ > php artisan cache:clear<br>
+ > php artisan config:cache<br>
+ > php artisan migrate:install<br>
+ > php artisan migrate<br>
+ > php artisan db:seed<br>
+ > cd game_server<br>
+ > npm install<br>
+
+### Tested setup so far
 - Create a new larvael project in a tmp folder
  > composer create-project laravel/laravel --prefer-dist
 
@@ -45,3 +64,15 @@
  > php artisan migrate:install<br>
  > php artisan migrate<br>
  > php artisan db:seed<br>
+ > cd game_server<br>
+ > npm install<br>
+
+## Configuration of the sub-domain for the game server:
+- Create the sub-domain "activity" for example activity.dixit.com
+- Add the following to the virtualhost settings of this sub-domain<br>
+ > ProxyPass / http://dixit:3000/<br>
+ > ProxyPassReverse / http://dixit:3000/
+
+## Run the game server
+- Go to root directory of the application "/Dixit"
+> sh run.sh&<br>

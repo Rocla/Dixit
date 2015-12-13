@@ -47,4 +47,20 @@ class HomeController extends Controller {
         return(Card::where('pk_id',$id)->first()->name);
 
     }
+
+    public function getImageByID($cardId)
+    {
+
+        $countCards = Card::count();
+
+        $cardId = $cardId % $countCards;
+
+        if ($cardId <= 0)
+        {
+            $cardId += $countCards;
+        }
+
+        return(Card::where('pk_id',$cardId)->first()->name);
+
+    }
 }

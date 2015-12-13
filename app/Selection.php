@@ -19,7 +19,8 @@ class Selection extends Model {
     }
 
     public function votes() {
-        return $this->belongsToMany('Dixit\Player', 'selection_is_voted_players', 'fk_players', 'pk_selection');
+        return $this->belongsToMany('Dixit\Player', 'selection_is_voted_players',
+                'fk_selections', 'fk_players');
     }
 
     protected $table = 'selections';

@@ -107,7 +107,6 @@ class AuthController extends Controller
                     return('0');
                 }
             }
-            
         }
 
     }

@@ -8,7 +8,6 @@
 }
 
 .hand {
-	margin: auto;
 	position: relative;
 }
 
@@ -28,6 +27,7 @@
     -moz-transform: rotate(5deg);
     -o-transform: rotate(5deg);
     transform: rotate(5deg);
+    margin-left: 10%; 
 }
  
 .hand img:nth-of-type(2) {
@@ -36,6 +36,7 @@
     -moz-transform: rotate(-10deg);
     -o-transform: rotate(-10deg);
     transform: rotate(-10deg);
+    margin-left: 3%; 
 }
  
 .hand img:nth-of-type(3) {
@@ -44,6 +45,7 @@
     -moz-transform: rotate(7deg);
     -o-transform: rotate(7deg);
     transform: rotate(7deg);
+    margin-left: 3%; 
 }
  
 .hand img:nth-of-type(4) {
@@ -52,6 +54,7 @@
     -moz-transform: rotate(-3deg);
     -o-transform: rotate(-3deg);
     transform: rotate(-3deg);
+    margin-left: 3%; 
 }
  
 .hand img:nth-of-type(5) {
@@ -60,6 +63,7 @@
     -moz-transform: rotate(2deg);
     -o-transform: rotate(2deg);
     transform: rotate(2deg);
+    margin-left: 3%; 
 }
 
 .hand img:nth-of-type(6) {
@@ -68,6 +72,7 @@
     -moz-transform: rotate(-5deg);
     -o-transform: rotate(-5deg);
     transform: rotate(-5deg);
+    margin-left: 3%; 
 }
 
 .hand img:hover {
@@ -76,4 +81,18 @@
     -o-transform: rotate(380deg) scale(1.5);
     transform: rotate(380deg) scale(1.5);
     z-index: 100;
+}
+
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(192, 192, 192, 0.5);
+    background-image: url("http://i.stack.imgur.com/MnyxU.gif");
+    background-repeat: no-repeat;
+    background-position: center;
 }

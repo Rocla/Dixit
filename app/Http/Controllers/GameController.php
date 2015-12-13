@@ -3,68 +3,125 @@
 namespace Dixit\Http\Controllers;
 
 use Dixit\Http\Controllers\Controller;
+use \Illuminate\Support\Facades\DB;
 use Dixit\Game;
 use Dixit\Player;
 use Dixit\User;
 use Dixit\Turn;
 use Dixit\Card;
 use Dixit\Selection;
+use \Dixit\Deck;
 
 class GameController extends Controller {
     /* ================================================================== */
+
     //      RELATIVE TO ALL PLAYER / TO A GAME
     /* ================================================================== */
 
+    public function startGame($gameId) {
+
+        $game = Game::find($gameId);
+
+        if (!$game->started) {
+
+            if (count($game->decks()->select('pk_id')->getResults()) == 0)
+                return "the game is not well init (not decks linked)";
+
+            $nbPlayers = $game->players()->count();
+            if ($nbPlayers >= 3) {
+
+                $idPlayers = $game->players()->select('pk_id')->getResults();
+                foreach ($idPlayers as $id) {
+                    $idPlayer = $id['pk_id'];
+
+                    for ($i = 1; $i <= 6; $i++) {
+                        $card = Card::find($this->getRandomCard($gameId));
+                        $player = Player::find($idPlayer);
+                        $player->cards()->attach($card);
+                        $player->update();
+                    }
+                }
+                $game->started = true;
+                $game->update();
+            } else {
+                return "not enough players";
+            }
+        } else {
+            return "game already started";
+        }
+    }
+
+    public function startNewTurn($gameId) {
+
+        $game = Game::find($gameId);
+
+        if ($game->started) {
+
+            if ($game->turns()->count() == 0 ||
+                    $this->getTurnStatus($gameId) == State::FINISHED) {
+                $turn = new Turn;
+                $turn->story = "";
+                $turn->number = $this->getTurnNumber($gameId) + 1;
+                $turn->state = State::STORRYTELLER_PLAY;
+                $turn->game()->associate($game);
+                $turn->storyteller()->associate($this->getCurrentPlayer($gameId));
+                $turn->save();
+            } else {
+                return "a turn is currently playing";
+            }
+        } else {
+            return "game is not started";
+        }
+    }
+
     /**
-     * Return the players pseudo in an array.
-     * 
-     * The key is the player id 
-     * The value is the name 
+     * Return the players id in an array.
      *
      * @return php array
      */
-    public function getPlayers($gameId) {
+    public function getPlayersId($gameId) {
         $game = Game::find($gameId);
         $player = $game->players()->orderBy('pk_id', 'desc')->select('pk_id')->getResults();
 
-        $pseudo = array();
-        foreach ($player as $p) {
-            $user = Player::find($p['pk_id'])->user()->select('username')->getResults();
-            array_push($pseudo, array($p['pk_id'] => $user['username']));
+        return $player;
+    }
+
+    /**
+     * Return the players id who have played   in an array.
+     *
+     * @return php array
+     */
+    public function getPlayersWhoPlayed($gameId) {
+        $playersId = $this->getPlayersId($gameId);
+
+        $result = array();
+        foreach ($playersId as $id) {
+            $result[] = $this->hasPlayerAlreadyPlay($gameId, $id['pk_id']);
         }
-
-        return $pseudo;
+        return $result;
     }
 
     /**
-     * Return the players status in an array.
-     * 1 mean the player is connected and not afk
-     * 0 mean the player is connected but afk
-     * -1 mean the player has been disconected
+     * Return the players  id  who have votedin an array.
      *
      * @return php array
      */
-    public function getPlayersStatus($gameId) {
-        //TODO recupérer le tableau des joueurs de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une méthode calculant leur status
-        //TODO extraire leur status dans un tableau et le retourner
+    public function getPlayersWhoVoted($gameId) {
+        $playersId = $this->getPlayersId($gameId);
 
-        return getStatus(1);
+        $result = array();
+        foreach ($playersId as $id) {
+            $result[] = $this->hasPlayerVoted($gameId, $id['pk_id']);
+        }
+        return $result;
     }
 
     /**
-     * Return the players scores in an array.
-     *
-     * @return php array
+     * Return the if the game is started or not.
      */
-    public function getPlayersScore($gameId) {
-        //TODO recupérer le tableau des joueurs de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une methode de calcule de score
-        //TODO extraire leur score dans un tableau et le retourner
-
-        return getScore(1);
+    public function getGameStarted($gameId) {
+        $game = Game::find($gameId);
+        return $game->started;
     }
 
     /**
@@ -73,10 +130,12 @@ class GameController extends Controller {
      * @return php array
      */
     public function getBoard($gameId) {
-        //TODO recupérer le tableau des  de la partie
-        //TODO organiser ses joueurs par id
-        //TODO faire une methode de calcule de score
-        //TODO extraire leur score dans un tableau et le retourner
+        if ($this->getTurnStatus($gameId) == State::PLAYERS_VOTE) {
+            $turn = $this->getCurrentTurn($gameId);
+            return $turn->selections()->select('fk_cards')->getResults();
+        } else {
+            return "you can not get the board now";
+        }
     }
 
     /**
@@ -90,13 +149,18 @@ class GameController extends Controller {
      * @return integer value
      */
     public function getTurnStatus($gameId) {
-        return $this->getCurrentTurn($gameId)->state;
+        $result = $this->getCurrentTurn($gameId);
+
+        if ($result != "")
+            return $result->state;
+        else
+            return "The game has not been started by the owner yet.";
     }
 
     /**
      * Return the number of the current turn as integer value.
      *
-     * @return integer value
+     * @return integer value (0 meen the game have no turn) 
      */
     public function getTurnNumber($gameId) {
         $game = Game::find($gameId);
@@ -109,7 +173,8 @@ class GameController extends Controller {
      * @return integer player id
      */
     public function getStoryTeller($gameId) {
-        return $this->getCurrentTurn($gameId)->storyteller()->getResults();
+        return $this->getCurrentTurn($gameId)->storyteller()->select('pk_id')->
+                        getResults()['pk_id'];
     }
 
     /**
@@ -134,40 +199,69 @@ class GameController extends Controller {
         $game = Game::find($gameId);
 
         $player = Player::find($playerId);
-        $cards = $player->cards()->getResults();
+        $cards = $player->cards()->select('name')->getResults();
 
         return $cards;
     }
 
-    /**
-     * Return if a player has vote.
-     *
-     * @return true if voted, false othervise
-     */
-    public function getVotedStatus($gameId, $playerId) {
-        return $this->hasPlayerVoted($gameId, $playerId);
+    public function hasPlayerVoted($gameId, $playerId) {
+        $turn = $this->getCurrentTurn($gameId);
+
+        $selectionsId = $turn->selections()->select('pk_id')->getResults();
+
+        foreach ($selectionsId as $id) {
+            $selection = Selection::find($id['pk_id']);
+            if ($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
+                return true;
+        }
+        return false;
     }
+
+    public function hasPlayerAlreadyPlay($gameId, $playerId) {
+        return $this->getCurrentTurn($gameId)->selections()->
+                        where('fk_players', '=', $playerId)->count() > 0;
+    }
+
+    public function getScore($gameId, $playerId) {
+        return Player::find($playerId)->score;
+    }
+
+    /* ================================================================== */
+    //      ACTIONS
+    /* ================================================================== */
 
     /**
      * Player vote for a specific card in the board.
      */
     public function vote($gameId, $playerId, $cardId) {
-        if ($this->getTurnStatus($gameId) == State::PLAYERS_VOTE &&
-                $this->isPlayerOfThisGame($gameId, $playerId) &&
-                !$this->isPlayerIdCurrentStorryteller($gameId, $playerId) &&
-                $this->isCardOnBoard($gameId, $cardId) &&
-                !$this->hasPlayerVoted($gameId, $playerId)) {
+        if (!$this->isPlayerOfThisGame($gameId, $playerId))
+            return "this player doesn't belong to this game";
+        if ($this->getTurnStatus($gameId) != State::PLAYERS_VOTE)
+            return "it's not the time to vote for a card";
+        if ($this->isPlayerIdCurrentStorryteller($gameId, $playerId))
+            return "the story teller can't vote now";
+        if (!$this->isCardOnBoard($gameId, $cardId))
+            return "this card is not on the board";
+        if ($this->hasPlayerVoted($gameId, $playerId))
+            return "this player has already voted";
 
-            $turn = $this->getCurrentTurn($gameId);
+        $turn = $this->getCurrentTurn($gameId);
 
-            $selection = $turn->selections()->where('card', '=', Card::find($cardId));
-            if ($selection != null) {
-                $selection->attach(Player::find($playerId));
-                $selection->update();
-            }
-            if ($turn->selections()->votes() == $game->players()->count - 1) {
-                $this->calculateScore();
-            }
+        $selection = $turn->selections()->where('fk_cards', '=', $cardId)->first();
+        if ($selection != null) {
+
+            $selectionPlayerId = $selection->player()->select('pk_id')->getResults()['pk_id'];
+            if ($selectionPlayerId == $playerId)
+                return "this player can't vote for his card";
+
+            $selection->votes()->attach($playerId);
+            $selection->update();
+        }
+
+        $game = Game::find($gameId);
+
+        if ($this->getVoteCount($gameId) == $game->players()->count() - 1) {
+            $this->calculateScore($gameId);
         }
     }
 
@@ -175,27 +269,35 @@ class GameController extends Controller {
      * Player select a card in his hand to match the sentence.
      */
     public function select($gameId, $playerId, $cardId) {
-        if ($this->getTurnStatus($gameId) == State::PLAYERS_PLAY &&
-                $this->isPlayerOfThisGame($gameId, $playerId) &&
-                !$this->isPlayerIdCurrentStorryteller($gameId, $playerId) &&
-                $this->hasPlayerACard($gameId, $playerId, $cardId) &&
-                !$this->hasPlayerAlreadyPlay($gameId, $playerId)) {
+        if (!$this->isPlayerOfThisGame($gameId, $playerId))
+            return "this player doesn't belong to this game";
+        if ($this->getTurnStatus($gameId) != State::PLAYERS_PLAY)
+            return "it's not the time to play a card";
+        if ($this->isPlayerIdCurrentStorryteller($gameId, $playerId))
+            return "the story teller can't play now";
+        if (!$this->hasPlayerACard($gameId, $playerId, $cardId))
+            return "this player doesn't have this card";
+        if ($this->hasPlayerAlreadyPlay($gameId, $playerId))
+            return "this player has already played";
 
-            $game = Game::find($gameId);
-            $turn = $this->getCurrentTurn($gameId);
+        $game = Game::find($gameId);
+        $turn = $this->getCurrentTurn($gameId);
 
-            $selection = new Selection;
-            $selection->player()->associate(Player::find($playerId));
-            $selection->card()->associate(Card::find($cardId));
-            $selection->save();
+        //Create the player selection
+        $selection = new Selection;
+        $selection->player()->associate(Player::find($playerId));
+        $selection->card()->associate(Card::find($cardId));
+        $selection->turn()->associate($turn);
+        $selection->save();
 
-            $turn->selections()->attach($selection);
+        //remove card from player hand
+        $player = Player::find($playerId);
+        $player->cards()->detach(Card::find($cardId));
+        $player->cards()->attach(Card::find($this->getRandomCard($gameId)));
+
+        if ($turn->selections()->count() == $game->players()->count()) {
+            $turn->state = State::PLAYERS_VOTE;
             $turn->update();
-
-            if ($turn->selections()->count == $game->players()->count) {
-                $turn->state = State::PLAYERS_VOTE;
-                $turn->update();
-            }
         }
     }
 
@@ -203,46 +305,32 @@ class GameController extends Controller {
      * Story teller choose a card and a sentence.
      */
     public function describe($gameId, $playerId, $cardId, $sentence) {
-        return $this->hasPlayerACard($gameId, $playerId, $cardId) ? 'true' : 'false';;
-        if ($this->getTurnStatus($gameId) == State::STORRYTELLER_PLAY &&
-                $this->isPlayerOfThisGame($gameId, $playerId) &&
-                $this->isPlayerIdCurrentStorryteller($gameId, $playerId) &&
-                $this->hasPlayerACard($gameId, $playerId, $cardId)) {
-            $turn = $this->getCurrentTurn($gameId);
-            $turn->story = $sentence;
+        if (!$this->isPlayerOfThisGame($gameId, $playerId))
+            return "this player doesn't belong to this game";
+        if ($this->getTurnStatus($gameId) != State::STORRYTELLER_PLAY)
+            return "it's not the time to tell a story";
+        if (!$this->isPlayerIdCurrentStorryteller($gameId, $playerId))
+            return "this player is not the story teller now";
+        if (!$this->hasPlayerACard($gameId, $playerId, $cardId))
+            return "this player doesn't have this card";
 
-            $selection = new Selection;
-            $selection->player()->associate($turn->storyteller());
-            $selection->card()->associate(Card::find($cardId));
+        $turn = $this->getCurrentTurn($gameId);
+        $turn->story = $sentence;
 
-            $turn->selections()->attach($selection);
-            $turn->state = State::PLAYERS_PLAY;
-            $turn->update();
-        }
-    }
+        //Create the player selection
+        $selection = new Selection;
+        $selection->player()->associate($turn->storyteller()->first());
+        $selection->card()->associate(Card::find($cardId));
+        $selection->turn()->associate($turn);
+        $selection->save();
 
-    /* ================================================================== */
+        //remove card from player hand and add one new
+        $player = Player::find($playerId);
+        $player->cards()->detach(Card::find($cardId));
+        $player->cards()->attach(Card::find($this->getRandomCard($gameId)));
 
-    //      PUBLIC
-    /* ================================================================== */
-
-    public function startNewTurn($gameId) {
-
-        $game = Game::find($gameId);
-
-        if ($game->players()->count() > 0) {
-
-            if ($game->turns()->count() == 0 ||
-                    $this->getTurnStatus($gameId) == State::FINISHED) {
-                $turn = new Turn;
-                $turn->story = "";
-                $turn->number = 1;
-                $turn->state = State::STORRYTELLER_PLAY;
-                $turn->game()->associate($game);
-                $turn->storyteller()->associate($this->getCurrentPlayer($gameId));
-                $turn->save();
-            }
-        }
+        $turn->state = State::PLAYERS_PLAY;
+        $turn->update();
     }
 
     /* ================================================================== */
@@ -250,29 +338,18 @@ class GameController extends Controller {
     //      PRIVATE
     /* ================================================================== */
 
-    private function getStatus($player) {
-        //TODO faire le calcule du status
-        return 1;
-    }
-
-    private function getScore($player) {
-        //TODO recuperer les tours de jeux
-        //TODO pour chaque tours calculer le score du joueur
-        //TODO sommer ce score et le retourner        
-        return 1000;
-    }
 
     private function getCurrentTurn($gameId) {
         $game = Game::find($gameId);
         $maxValue = $game->turns()->max('number');
-        $currentTurn = Turn::where('number', '=', $maxValue)->first();
+        $currentTurn = $game->turns()->where('number', '=', $maxValue)->first();
         return $currentTurn;
     }
 
     private function getRandomPlayer($gameId) {
         $game = Game::find($gameId);
         $playersId = $game->players()->orderBy('pk_id', 'desc')->select('pk_id')->getResults();
-        $player = Player::find($playersId[mt_rand(1, count($playersId)) - 1]['pk_id']);
+        $player = Player::find($playersId[mt_rand(0, count($playersId)) - 1]['pk_id']);
         return $player;
     }
 
@@ -284,7 +361,7 @@ class GameController extends Controller {
     }
 
     private function isPlayerIdCurrentStorryteller($gameId, $playerId) {
-        return $this->getCurrentTurn($gameId)->storyteller()->first()->pk_id;
+        return $this->getCurrentTurn($gameId)->storyteller()->first()->pk_id == $playerId;
     }
 
     private function isPlayerOfThisGame($gameId, $playerId) {
@@ -294,36 +371,66 @@ class GameController extends Controller {
     }
 
     private function hasPlayerACard($gameId, $playerId, $cardId) {
-        $game = Game::find($gameId);
         $player = Player::find($playerId);
-        //return $player->cards()->where('pk_id', '=', $cardId)->count == 1;
-        return true;
+        return count($player->cards()->where('pk_id', '=', $cardId)->first()) == 1;
     }
 
-    private function hasPlayerVoted($gameId, $playerId) {
-        $game = Game::find($gameId);
-        if($game->players->contains($playerId))
-        {
-            
+    private function getVoteCount($gameId) {
+        $turn = $this->getCurrentTurn($gameId);
+
+        $selectionsId = $turn->selections()->select('pk_id')->getResults();
+
+        $total = 0;
+        foreach ($selectionsId as $id) {
+            $selection = Selection::find($id['pk_id']);
+            $total += $selection->votes()->count();
         }
-        
-        $player = Player::find($playerId);
-        
-        return false;
+
+        return $total;
     }
 
     private function isCardOnBoard($gameId, $cardId) {
-        return true;
+        return $this->getCurrentTurn($gameId)->selections()->
+                        where('fk_cards', '=', $cardId)->count() > 0;
     }
 
-    private function hasPlayerAlreadyPlay($gameId, $playerId) {
-        return false;
+    private function isCardAlreadyPlayed($gameId, $cardId) {
+        $result = false;
+
+        if (Selection::where("fk_cards", "=", $cardId)->count() > 0)
+            $result = true;
+
+        if (DB::table('hands')->where("fk_cards", "=", $cardId)->count() > 0)
+            $result = true;
+
+        return $result;
     }
 
     private function calculateScore($gameId) {
         $turn = $this->getCurrentTurn($gameId);
         $turn->state = State::FINISHED;
         $turn->update();
+    }
+
+    private function getRandomCard($gameId) {
+        $game = Game::find($gameId);
+        $idDecks = $game->decks()->select('pk_id')->getResults();
+
+        $idDeckChoosen = $idDecks[mt_rand(0, count($idDecks) - 1)]['pk_id'];
+
+        $deck = Deck::find($idDeckChoosen);
+        $idCards = $deck->cards()->select('pk_id')->getResults();
+
+        $idCardChoosen;
+        do {
+            $idCardChoosen = $idCards[mt_rand(0, count($idCards) - 1)]['pk_id'];
+        } while ($this->isCardAlreadyPlayed($gameId, $idCardChoosen));
+
+        return $idCardChoosen;
+    }
+
+    public function trial() {
+        return $this->getStoryTeller(4);
     }
 
 }
