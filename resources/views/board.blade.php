@@ -616,9 +616,6 @@ $(document).ready(function(){
     });
 
     $("#validate_vote").click(function(){
-        var source = document.getElementById(play_spot).src;
-        source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
-        var card_position = player_hand.indexOf(source);
         $.when(
             $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {            
             })
@@ -629,8 +626,6 @@ $(document).ready(function(){
             $("#game_status").text("We are waiting on the other players to vote.");
         });
     });
-
-    console.log(voted_players)
 
     $("#image_settings").click(function(){
         if(refreshing)
