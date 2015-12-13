@@ -135,7 +135,7 @@ var play_spot = "";
 var player_cards_number = 6;
 var players_tmp = 0;
 var players = [];
-var player_owner = 2;
+var player_owner = 1;
 var player_storyteller = 0;
 var storyteller_number = 0;
 var player_played = [];
@@ -182,18 +182,21 @@ function pre_level_ajax()
 
 function first_level_ajax()
 {
-    //if(game_id != 0)
-    //{
+    if(game_id != 0)
+    {
         $.when(
             $.get( "/play/data/player/"+user_id, function(data) {
                 player_id = parseInt(data);
-                })
+                })//,
+            // $.get( "/play/data/player/"+game_id, function(data) {
+            //     player_owner = parseInt(data);
+            //     })
             ).then(second_level_ajax());
-    // }
-    // else
-    // {
-    //     window.location = "/play";
-    // }
+    }
+    else
+    {
+        window.location = "/play";
+    }
 }
 
 function second_level_ajax()
@@ -567,7 +570,7 @@ function load_board()
 $(document).ready(function(){
 
     $.ajaxSetup({async:false});
-    first_level_ajax();  
+    pre_level_ajax();  
     $imageRatio = 500/330;
     resize_height_cards();
     $( window ).resize(function() {
@@ -576,7 +579,6 @@ $(document).ready(function(){
 
     $("#launch_game").click(function(){
         $.get( "/play/action/create/"+game_id, function(data) {
-            location.reload();
         })
         $.get( "/play/action/start/"+game_id, function(data) {
         }),
