@@ -182,18 +182,18 @@ function pre_level_ajax()
 
 function first_level_ajax()
 {
-    if(game_id != 0)
-    {
+    //if(game_id != 0)
+    //{
         $.when(
             $.get( "/play/data/player/"+user_id, function(data) {
                 player_id = parseInt(data);
                 })
             ).then(second_level_ajax());
-    }
-    else
-    {
-        window.location = "/play";
-    }
+    // }
+    // else
+    // {
+    //     window.location = "/play";
+    // }
 }
 
 function second_level_ajax()
