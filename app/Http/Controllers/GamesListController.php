@@ -42,11 +42,14 @@ class GamesListController extends Controller
     public function addPlayer($gameId, $playerId)
     {
         $user=User::find($playerId);
-        $user->games()->attach($gameId);        
+        $user->games()->attach($gameId); 
+        //to do
+        // redirect user if he is already in game
         return redirect()->route('play', [$gameId]);        
     }
     public function delete($gameId)
     {
-        //to do 
+        $this->game->find($gameId)->delete(); 
+        
     }
 }

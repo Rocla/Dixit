@@ -301,6 +301,14 @@ class GameController extends Controller {
     }
 
     private function hasPlayerVoted($gameId, $playerId) {
+        $game = Game::find($gameId);
+        if($game->players->contains($playerId))
+        {
+            
+        }
+        
+        $player = Player::find($playerId);
+        
         return false;
     }
 
