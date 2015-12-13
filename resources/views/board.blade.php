@@ -155,6 +155,7 @@ var cards_played_by_id = [];
 var voted_players = [];
 var count_voted_players = 0;
 var count_validated_players = 0;
+var refresh_time = 15000;
 
 // Retrived data from live server
 // listen on game_status
@@ -267,6 +268,10 @@ function forth_level_ajax()
 
 function game_created_level_ajax()
 {
+    setTimeout(function(){
+       window.location.reload(1);
+    }, refresh_time);
+
     $.when(
         $.get( "/play/data/player/hand/"+game_id+"/"+player_id, function(data) {
             player_hand_tmp = data;
@@ -539,7 +544,8 @@ function load_board()
 
 
 // On page load
-$(document).ready(function(){ 
+$(document).ready(function(){
+
     $.ajaxSetup({async:false});
     first_level_ajax();  
     $imageRatio = 500/330;
