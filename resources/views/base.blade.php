@@ -8,7 +8,7 @@
 
     <link href="{{asset('/libs/bootstrap-3.3.5/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-    <link href="{{asset('/libs/bootstrap-3.3.5/css/lavish_bootstrap.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('/libs/bootstrap-3.3.5/css/lavish_bootstrap4.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('/libs/css/dixit.css')}}" rel="stylesheet" type="text/css">
     <!--<link href="{{asset('/libs/fonts/lato.css')}}" rel="stylesheet" type="text/css">-->
 
