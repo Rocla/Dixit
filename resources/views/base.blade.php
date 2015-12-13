@@ -33,7 +33,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('rules') }}">{{ trans('base.rules') }}</a></li>
                     <li><a href="{{ url('play') }}">{{ trans('base.play') }}</a></li>
-                    <li><a href="{{ url('board') }}">DEBUG</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

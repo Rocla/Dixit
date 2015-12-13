@@ -380,7 +380,7 @@ function load_board()
 
         for(var i=players.length+1; i<=12; i++)
         {
-            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/offline_red.png')}}");
+            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/invisible_light_red.png')}}");
         }
 
         if(parseInt(storyteller_number) == parseInt(player_number))
@@ -425,7 +425,7 @@ function load_board()
 
         for(var i=players.length+1; i<=12; i++)
         {
-            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/offline_red.png')}}");
+            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/invisible_light_red.png')}}");
         }
 
         $("#edit_game").attr('disabled',"true");
@@ -455,7 +455,7 @@ function load_board()
 
         for(var i=players.length+1; i<=12; i++)
         {
-            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/offline_red.png')}}");
+            $("#spot_card_"+i).attr('src', "{{asset('/images/default_avatar/invisible_light_red.png')}}");
         }  
         var game_board_div = document.getElementById("game_board_main");
         game_board_div.setAttribute('style',"position: relative; left: 0; top: 0;");

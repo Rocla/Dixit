@@ -36,8 +36,6 @@
  > php artisan migrate:install<br>
  > php artisan migrate<br>
  > php artisan db:seed<br>
- > cd game_server<br>
- > npm install<br>
 
 ### Tested setup so far
 - Create a new larvael project in a tmp folder
@@ -64,15 +62,20 @@
  > php artisan migrate:install<br>
  > php artisan migrate<br>
  > php artisan db:seed<br>
- > cd game_server<br>
- > npm install<br>
 
-## Configuration of the sub-domain for the game server:
+
+## NOT ACTIVE YET: 
+
+ > cd game_server<br>
+ > npm install
+
+Configuration of the sub-domain for the game server:
 - Create the sub-domain "activity" for example activity.dixit.com
-- Add the following to the virtualhost settings of this sub-domain<br>
+- Add the following to the virtualhost settings of this sub-domain
+
  > ProxyPass / http://dixit:3000/<br>
  > ProxyPassReverse / http://dixit:3000/
 
-## Run the game server
+### Run the game server
 - Go to root directory of the application "/Dixit"
 > sh run.sh&<br>
