@@ -31,16 +31,16 @@
 
  - Set the .env file
 
- > sudo chmod -R o+w storage<br>
- > composer dump-autoload<br>
- > composer update --no-scripts<br> 
- > composer update<br> 
- > php artisan vendor:publish<br>
- > php artisan cache:clear<br>
- > php artisan config:cache<br>
- > php artisan migrate:install<br>
- > php artisan migrate<br>
- > php artisan db:seed<br>
+> sudo chmod -R o+w storage<br>
+> composer dump-autoload<br>
+> composer update --no-scripts<br> 
+> composer update<br> 
+> php artisan vendor:publish<br>
+> php artisan cache:clear<br>
+> php artisan config:cache<br>
+> php artisan migrate:install<br>
+> php artisan migrate<br>
+> php artisan db:seed<br>
 
 ### Setup tested locally
 - Create a new larvael project in a tmp folder
@@ -71,25 +71,25 @@
 
 ### Example of .env
 
-> APP_ENV=local
-> APP_DEBUG=true
-> APP_KEY=SomeRandomString
+> APP_ENV=local<br>
+> APP_DEBUG=true<br>
+> APP_KEY=SomeRandomString<br>
 
-> DB_HOST=localhost
-> DB_DATABASE=homestead
-> DB_USERNAME=homestead
-> DB_PASSWORD=secret
+> DB_HOST=localhost<br>
+> DB_DATABASE=homestead<br>
+> DB_USERNAME=homestead<br>
+> DB_PASSWORD=secret<br>
 
-> CACHE_DRIVER=file
-> SESSION_DRIVER=file
-> QUEUE_DRIVER=sync
+> CACHE_DRIVER=file<br>
+> SESSION_DRIVER=file<br>
+> QUEUE_DRIVER=sync<br>
 
-> MAIL_DRIVER=smtp
-> MAIL_HOST=mailtrap.io
-> MAIL_PORT=2525
-> MAIL_USERNAME=null
-> MAIL_PASSWORD=null
-> MAIL_ENCRYPTION=null
+> MAIL_DRIVER=smtp<br>
+> MAIL_HOST=mailtrap.io<br>
+> MAIL_PORT=2525<br>
+> MAIL_USERNAME=null<br>
+> MAIL_PASSWORD=null<br>
+> MAIL_ENCRYPTION=null<br>
 
 
 ## DISMISSED 
