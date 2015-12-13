@@ -24,7 +24,7 @@ Route::get('board/{board_id}',['as'=>'board', 'uses'=>'BoardController@getBoard'
  * GAME ACTIONS
  */
 
-// Create the game LE CONTROLER EST FAUX ?
+// Create the game
 Route::post('play/action/create', 'GamesListController@createGame');
 // Start the game
 Route::get('play/action/start/{gameId}', 'GameController@startGame');
