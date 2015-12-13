@@ -65,8 +65,7 @@
     $(document).ready(function(){
         $("#newGame").click(function(){
             $("#div_newGame").toggle();
-        });    
-       
+        }); 
     });
 </script>
 @endsection

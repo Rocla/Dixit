@@ -24,8 +24,8 @@ Route::get('board/{board_id}', 'BoardController@getBoard');;
  * GAME ACTIONS
  */
 
-// Start the game
-Route::get('play/action/create/{gameId}', 'GameController@startGame');
+// Create the game LE CONTROLER EST FAUX ?
+//Route::get('play/action/create/{gameId}', 'GameController@startGame');
 // Start the game
 Route::get('play/action/start/{gameId}', 'GameController@startGame');
 // Create a new turn
@@ -69,6 +69,10 @@ Route::get('play/data/player/score/{gameId}/{playerId}', 'GameController@getScor
 Route::get('play/data/player/hand/{gameId}/{playerId}', 'GameController@getHand');
 // Get image name by id
 Route::get('play/data/cards/name/{cardId}', 'HomeController@getImageByID');
+// get the played status of players (as a array of bool in the same order as players list)
+Route::get('play/data/players/played/status/{gameId}', 'GameController@getPlayersWhoPlayed');
+// get the voted status of players (as a array of bool in the same order as players list)
+Route::get('play/data/players/voted/status/{gameId}', 'GameController@getPlayersWhoVoted');
 
 
 /*
