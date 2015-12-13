@@ -256,7 +256,7 @@ function forth_level_ajax()
 
     $.each(cards_played_by_id, function(local_card_id)
         {
-            ajaxList.push($.get( "/play/data/cards/name/"+local_card_id, function(data) {
+            ajaxList.push($.get( "/play/data/cards/name/"+cards_played_by_id[local_card_id], function(data) {
                 cards_played.push(data);
             }));
         });
@@ -425,7 +425,8 @@ function load_board()
     }
 
     if(game_voting)
-    {     
+    {    
+        $("#turn_story").show();
         $("#launch_game").attr('disabled',"true");
         $("#start_new_turn").attr('disabled',"true");
 
