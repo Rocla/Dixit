@@ -2,6 +2,8 @@
 
 [HTML5](http://www.w3.org/TR/html5/), [PHP](http://www.php.net), and [Laravel](http://laravel.com) adaptation of the Dixit card game.
 
+## [Project live at: http://phanes.srvz-webapp.he-arc.ch](http://phanes.srvz-webapp.he-arc.ch)
+
 
 ## Brief Description
 
@@ -21,11 +23,14 @@
 
 ## Setup the project
 
-### Setup to test:
+### Setup tested on nginx server:
  > git clone https://github.com/Rocla/Dixit.git<br>
- > cd Dixit<br>
+ > sudo rsync -a --progress Dixit/ www/<br>
+ > cd www<br>
  > composer install
+
  - Set the .env file
+
  > sudo chmod -R o+w storage<br>
  > composer dump-autoload<br>
  > composer update --no-scripts<br> 
@@ -37,7 +42,7 @@
  > php artisan migrate<br>
  > php artisan db:seed<br>
 
-### Tested setup so far
+### Setup tested locally
 - Create a new larvael project in a tmp folder
  > composer create-project laravel/laravel --prefer-dist
 
@@ -64,7 +69,30 @@
  > php artisan db:seed<br>
 
 
-## NOT ACTIVE YET: 
+### Example of .env
+
+> APP_ENV=local
+> APP_DEBUG=true
+> APP_KEY=SomeRandomString
+
+> DB_HOST=localhost
+> DB_DATABASE=homestead
+> DB_USERNAME=homestead
+> DB_PASSWORD=secret
+
+> CACHE_DRIVER=file
+> SESSION_DRIVER=file
+> QUEUE_DRIVER=sync
+
+> MAIL_DRIVER=smtp
+> MAIL_HOST=mailtrap.io
+> MAIL_PORT=2525
+> MAIL_USERNAME=null
+> MAIL_PASSWORD=null
+> MAIL_ENCRYPTION=null
+
+
+## DISMISSED 
 
  > cd game_server<br>
  > npm install
@@ -79,3 +107,4 @@ Configuration of the sub-domain for the game server:
 ### Run the game server
 - Go to root directory of the application "/Dixit"
 > sh run.sh&<br>
+
