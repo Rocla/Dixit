@@ -18,7 +18,7 @@
                     </table>
                 </div>
                 @endif
-                <div class="panel-heading">{{ trans('board.heading') }} Test</div>
+                <div class="panel-heading" id="title_name"></div>
 
                 <div class="panel-body">
                     <div id="administration_panel">
@@ -64,10 +64,11 @@
                                 <img src="{{asset('/images/default_avatar/waiting_light_blue.png')}}" width="100%" id="spot_card_7">
                             </div>
                         </div>
+                        <div id="game_board_main">
+                            <img src="{{asset('/images/boards/theme_odyssey.jpg')}}" width="100%" id="game_board_image">
+                        </div>
 
-                        <img src="{{asset('/images/boards/theme_odyssey.jpg')}}" width="100%">
-
-                        <div>
+                        <div id="bottom_cards_set">
                             <div class="card_on_board">
                                 <img src="{{asset('/images/default_avatar/waiting_light_blue.png')}}" width="100%" id="spot_card_1">
                             </div>
@@ -108,6 +109,7 @@
                                 <button type='button' id="validate_new_turn" class="btn btn-primary" disabled>Validate Card & Story</button>
                             </div>
                                 <button type='button' id="validate_card" class="btn btn-primary" disabled>Validate turn</button>
+                                <button type='button' id="validate_vote" class="btn btn-primary">Validate vote</button>
                         </div>
                     </div>
                 </div>
@@ -148,6 +150,8 @@ var turn_number = 0;
 var turn_story = "";
 var start_turn = false;
 var player_hand_numbers = [];
+var voted_card = 0;
+var cards_played_by_id = [];
 
 // Retrived data from live server
 // listen on game_status
@@ -191,8 +195,14 @@ function third_level_ajax()
         $.when(
             $.get( "/play/data/turn/board/"+game_id, function(data) {
                 cards_played_tmp = data;
+                }),
+            $.get( "/play/data/story/teller/"+game_id, function(data) {
+                player_storyteller = parseInt(data);
+                }),
+            $.get( "/play/data/story/"+game_id, function(data) {
+                turn_story = data;
                 })
-        ).then(game_created_level_ajax());
+        ).then(forth_level_ajax());
         
     }
     else if(storyteller_wait)
@@ -226,18 +236,19 @@ function forth_level_ajax()
 {
     $.each(cards_played_tmp, function(key, value)
     {
-        cards_played.push(value['fk_cards']);
+        cards_played_by_id.push(value['fk_cards']);
     });
 
-    $.when(
-        // $.each(cards_played, function(local_card_id)
-        // {
-            $.get( "/play/data/cards/name/"+local_card_id, function(data) {
-            cards_played_tmp = data;
-            })
-        // });
-        
-    ).then(game_created_level_ajax());
+    var ajaxList = [];
+
+    $.each(cards_played_by_id, function(local_card_id)
+        {
+            ajaxList.push($.get( "/play/data/cards/name/"+local_card_id, function(data) {
+                cards_played.push(data);
+            }));
+        });
+
+    $.when(ajaxList).then(game_created_level_ajax());
     
 }
 
@@ -281,9 +292,11 @@ function load_board()
     //console.log(cards_played)
 
     // Settup the game board
-
+    $("#title_name").text("{{ trans('board.heading') }} "+turn_number+" as player: "+(player_number+1));
     $("#turn_number").text("Turn Number: "+turn_number);
     $("#turn_story").text("Turn Story: "+turn_story);
+
+    $("#validate_vote").hide();
 
     for (card in player_hand)
     {
@@ -310,7 +323,7 @@ function load_board()
         }
     }
 
-    if(storyteller_wait)
+    if(storyteller_wait || game_voting)
     {
         storyteller_number = players.indexOf(player_storyteller);
         var storyteller_spot = "spot_card_" + (storyteller_number+1); 
@@ -357,10 +370,54 @@ function load_board()
     }
 
     if(game_voting)
-    {
-        // play/data/cards/name/{cardId}
-        // play/data/turn/board/{gameId}
+    {        
+        // for(var i=0; i<players.length;i++)
+        // {
+        //     $("#spot_card_"+(i+1)).attr('src', "{{asset('/images/cards/official')}}"+"/"+cards_played[i]);
+        // }
+
+        var game_board_div = document.getElementById("game_board_main");
+        game_board_div.setAttribute('style',"position: relative; left: 0; top: 0;");
+
+        var game_board_image_div = document.getElementById("game_board_image");
+        game_board_image_div.setAttribute('style',"position: relative; top: 0; left: 0;");
+        
+        var width_cards = 100/cards_played.length;
+        var top_cards = width_cards-10;
+        var left_cards = 0;
+
+        for (card in cards_played)
+        {
+            var vote_card = document.createElement('img');
+            var vote_card_id = 'vote_card_'+(parseInt(card)+1);
+            vote_card.setAttribute('id',vote_card_id);
+            vote_card.setAttribute('src',"{{asset('/images/cards/official/')}}/"+cards_played[card]);
+            if(parseInt(storyteller_number) != parseInt(player_number))
+            {
+                vote_card.setAttribute('onclick',"vote_card_selected("+ card + ", " + width_cards + ", " +top_cards + ", " +left_cards +")");
+            }    
+            vote_card.setAttribute('style',"position: absolute; top: "+top_cards+"%; left: "+left_cards+"%; width: "+width_cards+"%; margin-left: -1%; cursor:pointer;");
+            document.getElementById('game_board_main').appendChild(vote_card); 
+            left_cards += (width_cards+1);
+        } 
+
+        if(parseInt(storyteller_number) == parseInt(player_number))
+        {
+            $("#game_status").text("You are the storyteller, players must vote a carte based on your story.");
+        }
+        else
+        {
+            var vote_card_selection = document.createElement('img');
+            vote_card_selection.setAttribute('id',"vote_card_selection");
+            vote_card_selection.setAttribute('src',"{{asset('/images/cards/')}}/"+"selected_card.png");
+            document.getElementById('game_board_main').appendChild(vote_card_selection); 
+            $("#vote_card_selection").hide();
+        }
+
     }
+
+    // console.log(storyteller_number);
+    // console.log(player_number);
 
     if((parseInt(storyteller_number) != parseInt(player_number)) || (game_status != 10))
     {
@@ -448,6 +505,18 @@ $(document).ready(function(){
         })
     });
 
+    $("#validate_vote").click(function(){
+        var source = document.getElementById(play_spot).src;
+        source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
+        var card_position = player_hand.indexOf(source);
+        $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {
+            $("#validate_vote").hide();
+            $("#validate_vote").hide();
+            $("#bottom_game_actions").hide();
+            $("#game_status").text("We are waiting on the other players to vote.");
+        })
+    });
+
 });
 
 // Drag and drop for player
@@ -493,6 +562,16 @@ function game_loader(){
     var loading_id = "loading";
     loading.setAttribute('id',loading_id);
     document.getElementById('loading_spot').appendChild(loading);
+}
+
+function vote_card_selected(vote_card_id, width_cards, top_cards, left_cards){
+    voted_card = vote_card_id;
+    $("#vote_card_selection").show();
+    vote_card_selection.setAttribute('style',"position: absolute; top: "+top_cards+"%; left: "+left_cards+"%; width: "+width_cards+"%; margin-left: -1%; cursor:pointer; z-index: 3");
+    $("#bottom_game_actions").show();
+    $("#validate_vote").show();
+    $("#validate_card").hide();
+    
 }
 
 function set_game_status(game_state){
