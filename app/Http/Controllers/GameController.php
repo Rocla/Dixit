@@ -30,6 +30,36 @@ class GameController extends Controller {
     }
 
     /**
+     * Return the players id who have played   in an array.
+     *
+     * @return php array
+     */
+    public function getPlayersWhoPlayed($gameId) {
+        $playersId = $this->getPlayersId($gameId);
+
+        $result = array();
+        foreach ($playersId as $id) {
+            $result[] = $this->hasPlayerAlreadyPlay($gameId, $id['pk_id']);
+        }
+        return $result;
+    }
+
+    /**
+     * Return the players  id  who have votedin an array.
+     *
+     * @return php array
+     */
+    public function getPlayersWhoVoted($gameId) {
+        $playersId = $this->getPlayersId($gameId);
+
+        $result = array();
+        foreach ($playersId as $id) {
+            $result[] = $this->hasPlayerVoted($gameId, $id['pk_id']);
+        }
+        return $result;
+    }
+
+    /**
      * Return the if the game is started or not.
      */
     public function getGameStarted($gameId) {
@@ -63,7 +93,7 @@ class GameController extends Controller {
      */
     public function getTurnStatus($gameId) {
         $result = $this->getCurrentTurn($gameId);
-        
+
         if ($result != "")
             return $result->state;
         else
@@ -287,6 +317,7 @@ class GameController extends Controller {
             if ($selection->votes()->where('fk_players', '=', $playerId)->count() > 0)
                 return true;
         }
+        return false;
     }
 
     public function hasPlayerAlreadyPlay($gameId, $playerId) {
@@ -395,7 +426,7 @@ class GameController extends Controller {
     }
 
     public function trial() {
-        return $this->getTurnStatus(1);
+        return $this->getStoryTeller(4);
     }
 
 }
