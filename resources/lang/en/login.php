@@ -17,6 +17,6 @@ return [
     'email' => 'E-Mail Address',
     'password' => 'Your password',
     'cookie' => 'I can remember you for a Cookie',
-    'login' => 'Login me in',
+    'login' => 'Log me in',
     'forgot' => 'Forgot Your Password?',
 ];

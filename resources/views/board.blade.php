@@ -569,13 +569,23 @@ $(document).ready(function(){
     });
 
     $("#launch_game").click(function(){
-        $.get( "/play/action/create/"+game_id, function(data) {
-        })
-        $.get( "/play/action/start/"+game_id, function(data) {
-        }),
-        $.get( "/play/action/new/turn/"+game_id, function(data) {
-            location.reload();
-        })
+        var tmp_status = "";
+        $.when(
+            $.get( "/play/action/start/"+game_id, function(data) {
+                tmp_status = data;
+                $("#game_status").text(data);
+            })
+        ).then(function(){
+
+        if(tmp_status != "not enough players" || tmp_status != "game already started")
+        {
+             $.get( "/play/action/new/turn/"+game_id, function(data) {   
+                location.reload();
+            })
+        }  
+        });
+
+        
     });
 
     $("#start_new_turn").click(function(){
