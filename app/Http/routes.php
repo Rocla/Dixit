@@ -18,14 +18,14 @@ Route::post('cards/imageByID', 'WelcomeController@postImageByID');
 Route::post('cards_secured/imageByID', 'HomeController@postImageByID');
 Route::post('auth/testEmail', 'Auth\AuthController@postTestEmail');
 Route::post('play', 'GamesListController@getIndex');
-Route::get('board/{board_id}', 'BoardController@getBoard');;
+Route::get('board/{board_id}',['as'=>'board', 'uses'=>'BoardController@getBoard'] );;
 
 /*
  * GAME ACTIONS
  */
 
 // Create the game LE CONTROLER EST FAUX ?
-//Route::get('play/action/create/{gameId}', 'GameController@startGame');
+Route::post('play/action/create', 'GamesListController@createGame');
 // Start the game
 Route::get('play/action/start/{gameId}', 'GameController@startGame');
 // Create a new turn
@@ -41,6 +41,8 @@ Route::get('play/action/vote/{gameId}/{playerId}/{cardId}', 'GameController@vote
  * GAME DATA
  */
 
+// add player
+ Route::get('play/{gameId}/{playId}', 'GamesListController@addPlayer');
 // get the player ID from a user ID
 Route::get('play/data/player/{userId}', 'GamesListController@getPlayerId');
 // get the game ID from a user ID

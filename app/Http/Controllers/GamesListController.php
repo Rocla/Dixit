@@ -23,7 +23,7 @@ class GamesListController extends Controller {
         $games = $this->game->all();
         foreach ($games as $currentGame) {
             if ($currentGame->users->contains(Auth::user())) {
-                //return redirect()->route('play', [$currentGame->pk_id]);      
+                //return redirect()->route('board', [$currentGame->pk_id]);      
             }
         }
         return view('gameslist')->with('games', $this->game->all());
@@ -31,16 +31,14 @@ class GamesListController extends Controller {
 
     public function createGame(Request $request) {
         $game = Game::create(array_merge($request->all(), ['id_owner' => $request->user()->id, 'started' => 0, 'turn_timeout' => 3]));
-        
-        $game->decks()->attach(1);
-        
+        $game->decks()->attach(1);        
         return redirect('play');
     }
 
     public function addPlayer($gameId, $playerId) {
         $user = User::find($playerId);
         $user->games()->attach($gameId);
-        return redirect()->route('play', [$gameId]);
+        return redirect()->route('board', [$gameId]);
     }
 
     public function delete($gameId) {

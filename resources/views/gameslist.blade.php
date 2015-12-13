@@ -8,7 +8,7 @@
                 <input id="newGame" class="btn btn-primary" type="submit"  value="{{ trans('gamelist.heading') }}">        
                 <div  class="panel-heading" style="visibility: hidden"></div>
                     <div id="div_newGame" class="panel-body" style="display: none;">                          
-                        <form action="{{ url('/play') }}" method="POST"> 
+                        <form action="{{ url('/play/action/create') }}" method="POST"> 
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">{{ trans('gamelist.gamename') }}:</label>					                                    
@@ -46,7 +46,7 @@
                                 </div>
                                 @if($game->users->contains(Auth::user()))                                        
                                     <div class="col-md-8 col-md-offset-9">
-                                        {!!link_to_route('play', 'Game in progress', [$game->pk_id], ['class' => 'btn btn-primary']) !!}
+                                        {!!link_to_route('board', 'Game in progress', [$game->pk_id], ['class' => 'btn btn-primary'],  $secure = null) !!}
                                     </div>
                                 @else
                                     <div class="col-md-8 col-md-offset-10">  
