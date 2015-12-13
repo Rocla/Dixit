@@ -1,3 +1,17 @@
+#title_name{
+    float:left;
+}
+
+#title_settings{
+    float:right;
+    height: 700%;
+    z-index: 100;
+}
+
+#title_panel{
+    height: 40px;
+}
+
 .card_on_board{
 	width: 14%; 
 	float: left;

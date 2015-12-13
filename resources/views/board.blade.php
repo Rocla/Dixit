@@ -18,7 +18,12 @@
                     </table>
                 </div>
                 @endif
-                <div class="panel-heading" id="title_name"></div>
+                <div class="panel-heading" id="title_panel">
+                    <div id="title_name"></div>
+                    <div id="title_settings">
+                        <img src="{{asset('/images/other/refresh.png')}}" height="50%" id="image_settings">
+                    </div>
+                </div>
 
                 <div class="panel-body">
                     <div id="administration_panel">
@@ -155,7 +160,9 @@ var cards_played_by_id = [];
 var voted_players = [];
 var count_voted_players = 0;
 var count_validated_players = 0;
-var refresh_time = 15000;
+var refresh_time = 10000;
+var refreshing = true;
+var refresh_timer = 0;
 
 // Retrived data from live server
 // listen on game_status
@@ -268,7 +275,7 @@ function forth_level_ajax()
 
 function game_created_level_ajax()
 {
-    setTimeout(function(){
+    refresh_timer = setTimeout(function(){
        window.location.reload(1);
     }, refresh_time);
 
@@ -588,7 +595,7 @@ $(document).ready(function(){
         var source = document.getElementById(play_spot).src;
         source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
         var card_position = player_hand.indexOf(source);
-        console.log(player_hand_numbers[card_position])
+        //console.log(player_hand_numbers[card_position])
         $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
             $("#top_game_hand").hide();
             $("#bottom_game_hand").hide();
@@ -609,6 +616,24 @@ $(document).ready(function(){
             $("#bottom_game_actions").hide();
             $("#game_status").text("We are waiting on the other players to vote.");
         })
+    });
+
+    $("#image_settings").click(function(){
+        if(refreshing)
+        {
+            $("#image_settings").attr('src', "{{asset('/images/other/refresh_off.png')}}");
+            refreshing = false;
+            clearTimeout(refresh_timer);
+        }
+        else
+        {
+            $("#image_settings").attr('src', "{{asset('/images/other/refresh.png')}}");
+            refreshing = true;
+            refresh_timer = setTimeout(function(){
+               window.location.reload(1);
+            }, refresh_time);
+        }
+        
     });
 
 });
