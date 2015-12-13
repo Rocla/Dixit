@@ -54,5 +54,10 @@ class GamesListController extends Controller {
     public function getGameId($userId) {
         $playerId = $this->getPlayerId($userId);
         return Player::find($playerId)->game()->select('pk_id')->first()['pk_id'];
+    }    
+    
+    public function getOwnerId($gameId)
+    {
+        return Game::find($gameId)->id_owner;
     }
 }

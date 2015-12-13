@@ -45,6 +45,8 @@ Route::get('play/action/vote/{gameId}/{playerId}/{cardId}', 'GameController@vote
  Route::get('play/{gameId}/{playId}', 'GamesListController@addPlayer');
 // get the player ID from a user ID
 Route::get('play/data/player/{userId}', 'GamesListController@getPlayerId');
+//get  game owner
+Route::get('play/data/owner/{gameId}', 'GamesListController@getOwnerId' );
 // get the game ID from a user ID
 Route::get('play/data/game/{userId}', 'GamesListController@getGameId');
 // get the list of players from game ID
