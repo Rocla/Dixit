@@ -135,7 +135,7 @@ var play_spot = "";
 var player_cards_number = 6;
 var players_tmp = 0;
 var players = [];
-var player_owner = 1;
+var player_owner = 0;
 var player_storyteller = 0;
 var storyteller_number = 0;
 var player_played = [];
@@ -160,7 +160,7 @@ var cards_played_by_id = [];
 var voted_players = [];
 var count_voted_players = 0;
 var count_validated_players = 0;
-var refresh_time = 10000;
+var refresh_time = 20000;
 var refreshing = true;
 var refresh_timer = 0;
 
@@ -187,10 +187,10 @@ function first_level_ajax()
         $.when(
             $.get( "/play/data/player/"+user_id, function(data) {
                 player_id = parseInt(data);
-                })//,
-            // $.get( "/play/data/player/"+game_id, function(data) {
-            //     player_owner = parseInt(data);
-            //     })
+                }),
+            $.get( "/play/data/owner/"+game_id, function(data) {
+                player_owner = parseInt(data);
+                })
             ).then(second_level_ajax());
     }
     else
@@ -318,8 +318,6 @@ function load_board()
     player_number = players.indexOf(player_id);
     play_spot = "spot_card_" + (player_number+1);
 
-    player_owner = players.indexOf(player_owner);
-
     $.each(player_hand_tmp, function(key, value)
     {
         player_hand.push(value["name"]);
@@ -332,9 +330,6 @@ function load_board()
 
     player_played.reverse();
     voted_players.reverse();
-
-
-    //console.log(cards_played)
 
     // Settup the game board
     $("#title_name").text("{{ trans('board.heading') }} "+game_id+" as player: "+(player_number+1));
@@ -476,7 +471,6 @@ function load_board()
 
         for (card in cards_played)
         {
-            //console.log(cards_played);
             var vote_card = document.createElement('img');
             var vote_card_id = 'vote_card_'+(parseInt(card)+1);
             card_displayed_list.push(vote_card_id);
@@ -529,9 +523,6 @@ function load_board()
 
     }
 
-    // console.log(storyteller_number);
-    // console.log(player_number);
-
     if((parseInt(storyteller_number) != parseInt(player_number)) || (game_status != 10))
     {
         $("#storyteller_menu").hide();
@@ -550,7 +541,7 @@ function load_board()
         $("#validate_card").hide();
     }
 
-    if(player_number != player_owner)
+    if(user_id != player_owner)
     {
         $("#administration_panel").hide();
     }
@@ -611,27 +602,35 @@ $(document).ready(function(){
         source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
         var card_position = player_hand.indexOf(source);
         //console.log(player_hand_numbers[card_position])
-        $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
+        $.when(
+            $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
+            })
+        ).then(function(){
             $("#top_game_hand").hide();
             $("#bottom_game_hand").hide();
             $("#validate_card").hide();
             $("#validate_vote").hide();
             $("#bottom_game_actions").hide();
             $("#game_status").text("We are waiting on the other players to play a card.");
-        })
+        });
     });
 
     $("#validate_vote").click(function(){
         var source = document.getElementById(play_spot).src;
         source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
         var card_position = player_hand.indexOf(source);
-        $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {
+        $.when(
+            $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {            
+            })
+        ).then(function(){
             $("#validate_card").hide();
             $("#validate_vote").hide();
             $("#bottom_game_actions").hide();
             $("#game_status").text("We are waiting on the other players to vote.");
-        })
+        });
     });
+
+    console.log(voted_players)
 
     $("#image_settings").click(function(){
         if(refreshing)
