@@ -171,16 +171,29 @@ var refresh_timer = 0;
 // listen on player_played
 // listen on player_storyteller
 
-function first_level_ajax()
+function pre_level_ajax()
 {
     $.when(
     $.get( "/play/data/game/"+user_id, function(data) {
         game_id = parseInt(data);
-        }),
-    $.get( "/play/data/player/"+user_id, function(data) {
-        player_id = parseInt(data);
         })
-).then(second_level_ajax());
+    ).then(first_level_ajax());
+}
+
+function first_level_ajax()
+{
+    if(game_id != 0)
+    {
+        $.when(
+            $.get( "/play/data/player/"+user_id, function(data) {
+                player_id = parseInt(data);
+                })
+            ).then(second_level_ajax());
+    }
+    else
+    {
+        window.location = "/play";
+    }
 }
 
 function second_level_ajax()
