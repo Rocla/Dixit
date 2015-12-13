@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CardsOfficialDeckSeeder::class);
         $this->command->info('Seeding test users');
         $this->call(TestUsersSeeder::class);
-        $this->command->info('Seeding test games');
-        $this->call(TestGamesSeeder::class);
+        //$this->command->info('Seeding test games');
+        //$this->call(TestGamesSeeder::class);
 
         Model::reguard();
     }
