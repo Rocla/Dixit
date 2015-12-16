@@ -114,7 +114,7 @@
 						questionID.value = "{{ trans('recover.success_validation') }}";
 						break;
 					default:
-						questionID.value = "{{ trans('recover.unknown_error') }}";
+						questionID.value = data;
 						break;
 					}
 				}

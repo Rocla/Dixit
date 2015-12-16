@@ -17,7 +17,7 @@ return [
     'username' => 'Your username',
     'email' => 'Your e-mail address',
     'password' => 'Your password',
-    'password_confirm' => 'Confirm your password',
+    'password_confim' => 'Confirm your password',
     'question' => 'Your question to recover your password',
     'answer' => 'Your answer to recover your password',
     'answer_confirm' => 'Confirm your answer',
