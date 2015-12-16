@@ -124,10 +124,10 @@ class AuthController extends Controller
             $user->save();
 
             return redirect('auth/login')
-            ->with(['success' => '2']);
+            ->with(['success' => 'Congrats, you modified your password with success!']);
         }
 
         return redirect('auth/recover-password')->withInput($request->only('email', 'question'))
-        ->withErrors('1');
+        ->withErrors('Sorry, the anwser is incorrect.');
     }
 }
