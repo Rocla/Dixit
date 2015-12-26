@@ -171,10 +171,12 @@ var refresh_timer = 0;
 // listen on player_played
 // listen on player_storyteller
 
+var root = "{{ url('/') }}/";
+
 function pre_level_ajax()
 {
     $.when(
-    $.get( "/play/data/game/"+user_id, function(data) {
+    $.get( root + "/play/data/game/"+user_id, function(data) {
         game_id = parseInt(data);
         })
     ).then(first_level_ajax());
@@ -185,10 +187,10 @@ function first_level_ajax()
     if(game_id != 0)
     {
         $.when(
-            $.get( "/play/data/player/"+user_id, function(data) {
+            $.get( root + "/play/data/player/"+user_id, function(data) {
                 player_id = parseInt(data);
                 }),
-            $.get( "/play/data/owner/"+game_id, function(data) {
+            $.get( root + "/play/data/owner/"+game_id, function(data) {
                 player_owner = parseInt(data);
                 })
             ).then(second_level_ajax());
@@ -202,14 +204,14 @@ function first_level_ajax()
 function second_level_ajax()
 {
     $.when(
-        $.get( "/play/data/players/"+game_id, function(data) {
+        $.get( root + "/play/data/players/"+game_id, function(data) {
             players_tmp = data;
             }),
-        $.get( "/play/data/turn/status/"+game_id, function(data) {
+        $.get( root + "/play/data/turn/status/"+game_id, function(data) {
             game_status = data;
             set_game_status(parseInt(game_status));
             }),
-        $.get( "/play/data/game/status/"+game_id, function(data) {
+        $.get( root + "/play/data/game/status/"+game_id, function(data) {
             game_created = (parseInt(data)==1);
             console.log()
             })
@@ -221,25 +223,25 @@ function third_level_ajax()
     if(game_voting)
     {
         $.when(
-            $.get( "/play/data/turn/board/"+game_id, function(data) {
+            $.get( root + "/play/data/turn/board/"+game_id, function(data) {
                 cards_played_tmp = data;
                 }),
-            $.get( "/play/data/story/teller/"+game_id, function(data) {
+            $.get( root + "/play/data/story/teller/"+game_id, function(data) {
                 player_storyteller = parseInt(data);
                 }),
-            $.get( "/play/data/story/"+game_id, function(data) {
+            $.get( root + "/play/data/story/"+game_id, function(data) {
                 turn_story = data;
                 }),
-            $.get( "/play/data/players/voted/status/"+game_id, function(data) {
+            $.get( root + "/play/data/players/voted/status/"+game_id, function(data) {
                 voted_players = data;
                 })
         ).then(forth_level_ajax());
-        
+
     }
     else if(storyteller_wait)
     {
         $.when(
-            $.get( "/play/data/story/teller/"+game_id, function(data) {
+            $.get( root + "/play/data/story/teller/"+game_id, function(data) {
                 player_storyteller = parseInt(data);
                 })
         ).then(game_created_level_ajax());
@@ -247,13 +249,13 @@ function third_level_ajax()
     else if(game_playing)
     {
         $.when(
-            $.get( "/play/data/story/"+game_id, function(data) {
+            $.get( root + "/play/data/story/"+game_id, function(data) {
                 turn_story = data;
                 }),
-            $.get( "/play/data/story/teller/"+game_id, function(data) {
+            $.get( root + "/play/data/story/teller/"+game_id, function(data) {
                 player_storyteller = parseInt(data);
                 }),
-            $.get( "/play/data/players/played/status/"+game_id, function(data) {
+            $.get( root + "/play/data/players/played/status/"+game_id, function(data) {
                 player_played = data;
                 })
         ).then(game_created_level_ajax());
@@ -280,13 +282,13 @@ function forth_level_ajax()
 
     $.each(cards_played_by_id, function(local_card_id)
         {
-            ajaxList.push($.get( "/play/data/cards/name/"+cards_played_by_id[local_card_id], function(data) {
+            ajaxList.push($.get( root + "/play/data/cards/name/"+cards_played_by_id[local_card_id], function(data) {
                 cards_played.push(data);
             }));
         });
 
     $.when(ajaxList).then(game_created_level_ajax());
-    
+
 }
 
 function game_created_level_ajax()
@@ -296,10 +298,10 @@ function game_created_level_ajax()
     }, refresh_time);
 
     $.when(
-        $.get( "/play/data/player/hand/"+game_id+"/"+player_id, function(data) {
+        $.get( root + "/play/data/player/hand/"+game_id+"/"+player_id, function(data) {
             player_hand_tmp = data;
             }),
-        $.get( "/play/data/turn/number/"+game_id, function(data) {
+        $.get( root + "/play/data/turn/number/"+game_id, function(data) {
             turn_number = parseInt(data);
             })
     ).then(load_board);
@@ -571,7 +573,7 @@ $(document).ready(function(){
     $("#launch_game").click(function(){
         var tmp_status = "";
         $.when(
-            $.get( "/play/action/start/"+game_id, function(data) {
+            $.get( root + "/play/action/start/"+game_id, function(data) {
                 tmp_status = data;
                 $("#game_status").text(data);
             })
@@ -579,17 +581,17 @@ $(document).ready(function(){
 
         if(tmp_status != "not enough players" || tmp_status != "game already started")
         {
-             $.get( "/play/action/new/turn/"+game_id, function(data) {   
+             $.get( root + "/play/action/new/turn/"+game_id, function(data) {
                 location.reload();
             })
-        }  
+        }
         });
 
-        
+
     });
 
     $("#start_new_turn").click(function(){
-        $.get( "/play/action/new/turn/"+game_id, function(data) {
+        $.get( root + "/play/action/new/turn/"+game_id, function(data) {
             location.reload();
         })
     });
@@ -598,10 +600,10 @@ $(document).ready(function(){
         if($("#story").val() != "")
         {
             var source = document.getElementById(play_spot).src;
-            source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
+            source = source.replace("{{asset('/images/cards/official/')}}"+"/", "");
             var card_position = player_hand.indexOf(source);
             //console.log(player_hand_numbers[card_position]);
-            $.get( "/play/action/tell/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position]+"/"+$("#story").val(), function(data) {
+            $.get( root + "/play/action/tell/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position]+"/"+$("#story").val(), function(data) {
                 location.reload();
             })
         }
@@ -609,11 +611,11 @@ $(document).ready(function(){
 
     $("#validate_card").click(function(){
         var source = document.getElementById(play_spot).src;
-        source = source.replace("{{asset('/images/cards/official/')}}"+"/", ""); 
+        source = source.replace("{{asset('/images/cards/official/')}}"+"/", "");
         var card_position = player_hand.indexOf(source);
         //console.log(player_hand_numbers[card_position])
         $.when(
-            $.get( "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
+            $.get( root + "/play/action/choose/card/"+game_id+"/"+player_id+"/"+player_hand_numbers[card_position], function(data) {
             })
         ).then(function(){
             $("#top_game_hand").hide();
@@ -627,7 +629,7 @@ $(document).ready(function(){
 
     $("#validate_vote").click(function(){
         $.when(
-            $.get( "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {            
+            $.get( root + "/play/action/vote/"+game_id+"/"+player_id+"/"+cards_played_by_id[voted_card], function(data) {
             })
         ).then(function(){
             $("#validate_card").hide();
